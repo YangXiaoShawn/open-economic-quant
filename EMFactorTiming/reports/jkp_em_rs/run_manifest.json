@@ -1,0 +1,23 @@
+{
+  "provenance": "JKP",
+  "created_utc": "2026-09-30T14:06:51+00:00",
+  "test_region": "EM",
+  "oos_start": 2000,
+  "cost_bps": 20.0,
+  "models": [
+    "ols",
+    "enet",
+    "gbrt",
+    "ols_rs",
+    "enet_rs",
+    "gbrt_rs",
+    "hist_mean",
+    "shrink_mean"
+  ],
+  "weighting": "vw_cap",
+  "min_stocks": 5,
+  "kappa": 120.0,
+  "market_history": false,
+  "data": "data/raw/",
+  "seed": 0
+}

@@ -1,0 +1,64 @@
+# Time-varying market classification (robustness check; `--market-history`).
+#
+# Each event moves a country into `region` from the first full calendar month after
+# MSCI implemented the change (`from_month`). Before a country's first event it has
+# the region in `was`; countries with no event keep their class in markets.yaml
+# throughout. Regions: DM, EM, OTHER (Frontier, Standalone or not covered).
+#
+# Scope: reclassifications between Developed, Emerging, Frontier and Standalone
+# status inside the sample (1986-2025). First inclusion of a market in the MSCI
+# indexes (e.g. India 1994, China 1996, Russia 1997) and partial-inclusion steps
+# (Korea 1992-98, Taiwan 1996-2005) are NOT modelled; those markets keep their class
+# for the whole sample. Reclassifications announced but effective after 2025-12
+# (e.g. Greece, under consultation in 2025) are outside the data.
+#
+# Sources
+#   [MCR]  MSCI, Annual Market Classification Review, list of reclassifications
+#          https://www.msci.com/eqb/gimi/stdindex/market_classification.html
+#   [PAK08] MSCI Barra, 10 Dec 2008: MSCI Pakistan removed from MSCI EM as of the
+#          close of 31 Dec 2008, kept as a standalone index
+#          https://mondovisione.com/news/msci-barra-to-remove-the-msci-pakistan-index-from-the-msci-emerging-markets-inde-2011124/
+#   [PAK17] MSCI Pakistan reclassified Frontier -> Emerging at the May 2017 SAIR,
+#          effective 1 Jun 2017  https://www.dawn.com/news/amp/1333488
+#   [ARG19] MSCI, 20 Jun 2018: Argentina Frontier -> Emerging, effective May 2019
+#          https://www.globalxetfs.com/msci-upgrades-argentina-to-emerging-market-status/
+#   [SAU19] MSCI: Saudi Arabia added to MSCI EM in two steps, May 2019 SAIR and Aug 2019 QIR
+#          https://www.msci.com/documents/10199/95fa3628-ff2e-e9cd-53b9-8912329ec40c
+#   [KWT20] MSCI: Kuwait added to MSCI EM as of the close of 30 Nov 2020
+#          https://www.msci.com/research-and-insights/blog-post/kuwait-move-from-frontier-to-emerging-market
+#   [PAK21] MSCI, 7 Sep 2021: Pakistan Emerging -> Frontier at the Nov 2021 SAIR
+#          https://www.businesswire.com/news/home/20210907005911/en
+#   [ARG21] MSCI, 24 Jun 2021: Argentina Emerging -> Standalone at the Nov 2021 SAIR
+#          https://www.estudio-ofarrell.com/en/argentina-was-reclassified-as-msci-standalone-market-by-msci
+#   [RUS22] MSCI, 2 Mar 2022: Russia Emerging -> Standalone as of the close of 9 Mar 2022
+#          https://www.businesswire.com/news/home/20220302006111/en/MSCI-to-Reclassify-the-MSCI-Russia-Indexes-from-Emerging-Markets-to-Standalone-Markets-Status
+#
+#   [XLSX] MSCI, "Previous Market Reclassifications.xlsx", linked from
+#          https://www.msci.com/our-solutions/indexes/market-classification
+#          (downloaded 2026-09-30; kept in data/raw_msci/, not committed)
+#
+# Cross-check against [XLSX], 2026-09-30: every event below matches its effective month
+# there (Pakistan's Dec 2008 removal appears as its footnoted standalone -> frontier move
+# of May 2009). [XLSX] lists no other change involving Developed or Emerging status for
+# the 1986-2025 sample; its remaining rows move markets between Frontier and Standalone
+# (both OTHER here) or record China A-share partial inclusion (2018), which is not modelled.
+
+events:
+  - {country: prt, from_month: 1997-12, was: EM, region: DM, note: "Emerging -> Developed, Nov 1997", source: MCR}
+  - {country: grc, from_month: 2001-06, was: EM, region: DM, note: "Emerging -> Developed, May 2001", source: MCR}
+  - {country: ven, from_month: 2006-06, was: EM, region: OTHER, note: "Emerging -> Standalone, May 2006", source: MCR}
+  - {country: jor, from_month: 2008-12, was: EM, region: OTHER, note: "Emerging -> Frontier, Nov 2008", source: MCR}
+  - {country: pak, from_month: 2009-01, was: EM, region: OTHER, note: "Emerging -> Standalone, close of 31 Dec 2008", source: PAK08}
+  - {country: arg, from_month: 2009-06, was: EM, region: OTHER, note: "Emerging -> Frontier, May 2009", source: MCR}
+  - {country: isr, from_month: 2010-06, was: EM, region: DM, note: "Emerging -> Developed, May 2010", source: MCR}
+  - {country: grc, from_month: 2013-12, region: EM, note: "Developed -> Emerging, Nov 2013", source: MCR}
+  - {country: mar, from_month: 2013-12, was: EM, region: OTHER, note: "Emerging -> Frontier, Nov 2013", source: MCR}
+  - {country: qat, from_month: 2014-06, was: OTHER, region: EM, note: "Frontier -> Emerging, May 2014", source: MCR}
+  - {country: are, from_month: 2014-06, was: OTHER, region: EM, note: "Frontier -> Emerging, May 2014", source: MCR}
+  - {country: pak, from_month: 2017-06, region: EM, note: "Frontier -> Emerging, effective 1 Jun 2017", source: PAK17}
+  - {country: arg, from_month: 2019-06, region: EM, note: "Frontier -> Emerging, May 2019", source: ARG19}
+  - {country: sau, from_month: 2019-06, was: OTHER, region: EM, note: "Standalone -> Emerging, May 2019 (step 1 of 2)", source: SAU19}
+  - {country: kwt, from_month: 2020-12, was: OTHER, region: EM, note: "Frontier -> Emerging, close of 30 Nov 2020", source: KWT20}
+  - {country: pak, from_month: 2021-12, region: OTHER, note: "Emerging -> Frontier, Nov 2021", source: PAK21}
+  - {country: arg, from_month: 2021-12, region: OTHER, note: "Emerging -> Standalone, Nov 2021", source: ARG21}
+  - {country: rus, from_month: 2022-04, was: EM, region: OTHER, note: "Emerging -> Standalone, close of 9 Mar 2022", source: RUS22}

@@ -1,0 +1,59 @@
+# Market classification used to split the sample.
+# Source: MSCI market classification (Developed vs. Emerging), as of 2025.
+# Codes are lower-case ISO 3166-1 alpha-3, matching the JKP "location" field.
+#
+# Limitation: this is a STATIC, current classification applied to the whole
+# sample. Several countries moved over time (e.g. Israel became Developed in
+# 2010; Greece moved to Emerging in 2013). A time-varying map is a planned
+# robustness check (see STATUS.md).
+
+developed:
+  - aus  # Australia
+  - aut  # Austria
+  - bel  # Belgium
+  - can  # Canada
+  - che  # Switzerland
+  - deu  # Germany
+  - dnk  # Denmark
+  - esp  # Spain
+  - fin  # Finland
+  - fra  # France
+  - gbr  # United Kingdom
+  - hkg  # Hong Kong
+  - irl  # Ireland
+  - isr  # Israel
+  - ita  # Italy
+  - jpn  # Japan
+  - nld  # Netherlands
+  - nor  # Norway
+  - nzl  # New Zealand
+  - prt  # Portugal
+  - sgp  # Singapore
+  - swe  # Sweden
+  - usa  # United States
+
+emerging:
+  - are  # United Arab Emirates
+  - bra  # Brazil
+  - chl  # Chile
+  - chn  # China
+  - col  # Colombia
+  - cze  # Czech Republic
+  - egy  # Egypt
+  - grc  # Greece
+  - hun  # Hungary
+  - idn  # Indonesia
+  - ind  # India
+  - kor  # Korea
+  - kwt  # Kuwait
+  - mex  # Mexico
+  - mys  # Malaysia
+  - per  # Peru
+  - phl  # Philippines
+  - pol  # Poland
+  - qat  # Qatar
+  - sau  # Saudi Arabia
+  - tha  # Thailand
+  - tur  # Turkey
+  - twn  # Taiwan
+  - zaf  # South Africa

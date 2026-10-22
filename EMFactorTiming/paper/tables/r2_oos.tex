@@ -1,0 +1,33 @@
+\begin{table}[!ht]
+\centering\small\setlength{\tabcolsep}{4pt}
+\caption{Out-of-sample $R^2$ for emerging-market factor returns, 2000--2025}
+\label{tab:r2}
+\begin{tabular}{llrrrrrr}
+\toprule
+ & & \multicolumn{2}{c}{vs.\ own historical mean} & \multicolumn{2}{c}{vs.\ shrinkage mean} & & \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}
+Model & Training & $R^2_{OS}$ (\%) & CW $t$ & $R^2_{OS}$ (\%) & CW $t$ & Slope & Obs. \\
+\midrule
+OLS & EM & 1.148 & 8.72 & $-$0.055 & 1.61 & 0.35 & 801,536 \\
+ & DM only & 1.011 & 8.70 & $-$0.194 & 2.10 & 0.29 & 801,536 \\
+ & Pooled & 1.108 & 8.82 & $-$0.096 & 2.10 & 0.35 & 801,536 \\
+Elastic net & EM & 1.157 & 8.73 & $-$0.046 & 1.56 & 0.36 & 801,536 \\
+ & DM only & 1.031 & 8.69 & $-$0.174 & 2.08 & 0.30 & 801,536 \\
+ & Pooled & 1.119 & 8.83 & $-$0.084 & 2.03 & 0.35 & 801,536 \\
+Gradient-boosted trees & EM & 0.993 & 8.88 & $-$0.212 & 3.66 & 0.30 & 801,536 \\
+ & DM only & 0.973 & 8.45 & $-$0.233 & 3.79 & 0.35 & 801,536 \\
+ & Pooled & 1.096 & 8.95 & $-$0.108 & 4.25 & 0.40 & 801,536 \\
+Neural network & EM & 0.832 & 8.45 & $-$0.376 & 1.82 & 0.19 & 801,536 \\
+ & DM only & 0.728 & 8.33 & $-$0.481 & 3.88 & 0.27 & 801,536 \\
+ & Pooled & 0.910 & 8.65 & $-$0.296 & 3.08 & 0.29 & 801,536 \\
+\addlinespace
+Factor momentum & -- & $-$6.169 & 5.01 & $-$7.461 & 2.41 & -- & 801,536 \\
+Shrinkage mean & -- & 1.203 & 9.05 & 0.000 & -- & -- & 801,536 \\
+\bottomrule
+\end{tabular}
+
+\vspace{4pt}
+\begin{minipage}{0.95\linewidth}\footnotesize
+\textit{Notes:} Pooled over all emerging-market country-factor-months. $R^2_{OS} = 1 - \sum (r-\hat r)^2 / \sum (r-b)^2$ for benchmark $b$. CW $t$ is the Clark--West statistic: the adjusted MSPE difference is averaged across the cross-section each month and its mean tested with Newey--West standard errors (3 lags); one-sided 5\% critical value 1.645. Training scope: EM = emerging markets only; DM only = developed markets only (the transfer test); Pooled = both. Learned models forecast the deviation from the shrinkage mean and are refitted every January. The shrinkage mean is the benchmark itself, so its own row against that benchmark is zero by construction. Slope: pooled regression slope, without intercept, of $r-\tilde r$ on $\hat r-\tilde r$ over the whole out-of-sample period; a descriptive diagnostic that uses future data and is not a tradable rescaling.
+\end{minipage}
+\end{table}

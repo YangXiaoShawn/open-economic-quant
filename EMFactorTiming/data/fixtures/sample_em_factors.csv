@@ -1,0 +1,7 @@
+location,name,date,ret_vw_cap,n_stocks_min
+KOR,value,2025-10-31,0.0142,24
+KOR,momentum,2025-10-31,0.0088,24
+TWN,value,2025-10-31,0.0115,31
+TWN,momentum,2025-10-31,0.0194,31
+BRA,value,2025-10-31,-0.0064,15
+BRA,momentum,2025-10-31,0.0121,15

@@ -1,0 +1,37 @@
+\begin{table}[!ht]
+\centering\small\setlength{\tabcolsep}{5pt}
+\caption{Emerging-market factor-timing portfolios}
+\label{tab:portfolios}
+\begin{tabular}{llrrrrr}
+\toprule
+Strategy & Training & Mean (\%) & Vol.\ (\%) & SR gross & SR net & Turnover \\
+\midrule
+Static equal-weight & -- & 2.42 & 1.60 & 1.51 & 1.48 & 0.02 \\
+\addlinespace
+OLS & EM & 3.08 & 1.91 & 1.61 & 1.07 & 0.43 \\
+ & DM only & 3.07 & 2.19 & 1.40 & 0.71 & 0.63 \\
+ & Pooled & 3.14 & 2.10 & 1.50 & 0.86 & 0.56 \\
+\addlinespace[2pt]
+Elastic net & EM & 3.10 & 1.88 & 1.64 & 1.11 & 0.41 \\
+ & DM only & 3.10 & 2.18 & 1.42 & 0.74 & 0.62 \\
+ & Pooled & 3.16 & 2.09 & 1.51 & 0.88 & 0.54 \\
+\addlinespace[2pt]
+Gradient-boosted trees & EM & 3.34 & 1.72 & 1.94 & 1.26 & 0.48 \\
+ & DM only & 3.83 & 2.10 & 1.82 & 1.13 & 0.61 \\
+ & Pooled & 3.69 & 2.01 & 1.83 & 1.17 & 0.55 \\
+\addlinespace[2pt]
+Neural network & EM & 3.06 & 1.86 & 1.65 & 1.07 & 0.45 \\
+ & DM only & 3.43 & 2.02 & 1.70 & 0.99 & 0.60 \\
+ & Pooled & 3.23 & 2.09 & 1.54 & 0.90 & 0.56 \\
+\addlinespace
+Shrinkage mean & -- & 3.19 & 1.60 & 2.00 & 1.91 & 0.06 \\
+Own historical mean & -- & 2.32 & 1.51 & 1.53 & 1.41 & 0.07 \\
+Factor momentum (sign) & -- & 2.02 & 1.84 & 1.10 & 0.77 & 0.25 \\
+\bottomrule
+\end{tabular}
+
+\vspace{4pt}
+\begin{minipage}{0.95\linewidth}\footnotesize
+\textit{Notes:} Within each emerging market and month, the timing portfolio holds each factor in proportion to its forecast, scaled to unit gross exposure; the static portfolio holds every available factor equally. Country portfolios are averaged with equal weights. Mean and volatility are annualized, gross of timing costs. Net Sharpe ratios deduct 20 basis points per unit of monthly turnover; factor returns are already gross of their own rebalancing costs. The factor-momentum rule holds each factor long or short by the sign of its trailing 12-month mean.
+\end{minipage}
+\end{table}

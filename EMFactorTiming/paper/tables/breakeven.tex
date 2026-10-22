@@ -1,0 +1,20 @@
+\begin{table}[!ht]
+\centering\small
+\caption{Break-even trading cost of timing portfolios (basis points per unit of turnover)}
+\label{tab:breakeven}
+\begin{tabular}{lrrrr}
+\toprule
+Specification & Elastic net, EM & Elastic net, DM & GBRT, EM & GBRT, DM \\
+\midrule
+Baseline & 6 & never & 13 & 10 \\
+Equal-weighted factors & 44 & 30 & 47 & 36 \\
+Uncapped value-weighted & 3 & never & 8 & 6 \\
+Time-varying classification & 5 & never & 16 & 4 \\
+\bottomrule
+\end{tabular}
+
+\vspace{4pt}
+\begin{minipage}{0.95\linewidth}\footnotesize
+\textit{Notes:} Cost per unit of monthly timing turnover at which the timing portfolio's net Sharpe ratio equals that of the static equal-weight factor portfolio, which is charged the same cost on its own turnover. ``never'': the timing portfolio's Sharpe ratio is lower even at zero cost. EM / DM = trained on emerging / developed markets only. Against the shrinkage-mean portfolio the break-even cost is positive only for GBRT, EM (time-varying classification, 1 bp).
+\end{minipage}
+\end{table}

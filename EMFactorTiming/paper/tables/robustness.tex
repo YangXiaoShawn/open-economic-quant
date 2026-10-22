@@ -1,0 +1,48 @@
+\begin{table}[!ht]
+\centering\footnotesize
+\caption{Robustness}
+\label{tab:robust}
+\begin{tabular}{lrrrrrrrrr}
+\toprule
+\multicolumn{10}{l}{\textit{Panel A: $R^2_{OS}$ (\%) and Clark--West $t$ against the shrinkage mean}} \\
+\addlinespace
+ & Shrink.\ vs.\ & \multicolumn{2}{c}{Elastic net, EM} & \multicolumn{2}{c}{Elastic net, DM} & \multicolumn{2}{c}{GBRT, EM} & \multicolumn{2}{c}{GBRT, DM} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}\cmidrule(lr){9-10}
+Specification & own mean & $R^2$ & $t$ & $R^2$ & $t$ & $R^2$ & $t$ & $R^2$ & $t$ \\
+\midrule
+Baseline & 1.203 & $-$0.046 & 1.56 & $-$0.174 & 2.08 & $-$0.212 & 3.66 & $-$0.233 & 3.79 \\
+OOS from 2005 & 0.972 & $-$0.005 & 1.89 & $-$0.132 & 1.99 & 0.011 & 3.51 & $-$0.170 & 3.11 \\
+$\kappa = 60$ & 0.976 & $-$0.004 & 3.13 & $-$0.129 & 3.08 & $-$0.195 & 4.48 & $-$0.176 & 4.46 \\
+$\kappa = 240$ & 1.356 & $-$0.069 & 0.79 & $-$0.197 & 1.52 & $-$0.265 & 2.88 & $-$0.261 & 3.45 \\
+Equal-weighted factors & 1.370 & 0.114 & 3.79 & 0.103 & 4.14 & $-$0.020 & 4.34 & $-$0.041 & 4.74 \\
+Uncapped value-weighted & 1.194 & $-$0.054 & 1.28 & $-$0.129 & 1.37 & $-$0.294 & 1.21 & $-$0.247 & 3.14 \\
+Time-varying classification & 1.229 & $-$0.047 & 1.84 & $-$0.183 & 2.02 & $-$0.240 & 3.66 & $-$0.318 & 3.28 \\
+\bottomrule
+\end{tabular}
+
+\vspace{10pt}
+\begin{tabular}{lrrrrrr}
+\toprule
+\multicolumn{7}{l}{\textit{Panel B: net Sharpe ratios of timing portfolios}} \\
+\addlinespace
+ & & Shrinkage & \multicolumn{2}{c}{Elastic net} & \multicolumn{2}{c}{GBRT} \\
+\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+Specification & Static & mean & EM & DM & EM & DM \\
+\midrule
+Baseline & 1.48 & 1.91 & 1.11 & 0.74 & 1.26 & 1.13 \\
+OOS from 2005 & 1.34 & 1.79 & 1.25 & 0.77 & 1.34 & 0.99 \\
+$\kappa = 60$ & 1.48 & 1.73 & 1.00 & 0.70 & 1.15 & 1.09 \\
+$\kappa = 240$ & 1.48 & 2.05 & 1.19 & 0.77 & 1.31 & 1.15 \\
+Equal-weighted factors & 2.01 & 3.90 & 2.76 & 2.31 & 3.08 & 2.51 \\
+Uncapped value-weighted & 1.45 & 1.80 & 1.03 & 0.74 & 1.10 & 1.06 \\
+Time-varying classification & 1.56 & 1.97 & 1.19 & 0.83 & 1.43 & 1.05 \\
+Cost 10 bp & 1.49 & 1.95 & 1.38 & 1.08 & 1.60 & 1.47 \\
+Cost 40 bp & 1.45 & 1.81 & 0.58 & 0.05 & 0.59 & 0.43 \\
+\bottomrule
+\end{tabular}
+
+\vspace{4pt}
+\begin{minipage}{0.97\linewidth}\footnotesize
+\textit{Notes:} Emerging-market test set. Baseline: $\kappa=120$, 20 bp per unit of turnover, out of sample 2000--2025. ``OOS from 2005'' keeps the baseline forecasts for target months from 2005, which equal those of a rerun starting in 2005 because models are refitted annually on an expanding window. $\kappa$ rows rerun the full pipeline, changing both the benchmark and the learned models' anchor. Factor-weighting rows rerun it on equal-weighted or uncapped value-weighted JKP factors. ``Time-varying classification'' assigns each country-month the MSCI class then in force (Appendix~\ref{app:classification}). Cost rows change only the charge per unit of timing turnover. ``Shrink.\ vs.\ own mean'' is the $R^2_{OS}$ of the shrinkage mean against the own historical mean. EM / DM = trained on emerging / developed markets only.
+\end{minipage}
+\end{table}

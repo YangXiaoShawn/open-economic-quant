@@ -1,0 +1,5 @@
+spec,vs_static_enet:own,vs_shrink_enet:own,vs_static_enet:dm_only,vs_shrink_enet:dm_only,vs_static_gbrt:own,vs_shrink_gbrt:own,vs_static_gbrt:dm_only,vs_shrink_gbrt:dm_only
+Baseline,5.506779428622546,,,,13.4579661600945,,9.509002432076297,
+Equal-weighted factors,43.90224424248038,,29.69672148453214,,47.46099069276919,,35.56871976540181,
+Uncapped value-weighted,2.884911342644372,,,,8.427038182534385,,6.214215274746631,
+Time-varying classification,5.19432394169534,,,,15.805234279106475,1.2142753865674534,4.41276485100908,
