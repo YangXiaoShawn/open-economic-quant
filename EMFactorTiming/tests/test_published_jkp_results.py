@@ -79,6 +79,20 @@ class TestEMFactorTimingPublishedTables(unittest.TestCase):
         w = empirical_bayes_shrinkage_weight(own_variance=0.0025, cross_sectional_variance=0.00002, n_obs=120)
         self.assertTrue(0.45 < w < 0.55)
 
+    def test_post_2025_oos_2026_10_update(self) -> None:
+        path = ROOT / "reports" / "post_2025_oos_2026_10" / "portfolios_2026.csv"
+        with path.open("r", encoding="utf-8") as fh:
+            rows = {r["strategy"]: r for r in csv.DictReader(fh)}
+        self.assertEqual(int(rows["shrink_mean_k240:rule"]["months"]), 10)
+        self.assertAlmostEqual(float(rows["shrink_mean_k240:rule"]["cum_net_2026_pct"]), 6.95, places=2)
+        self.assertAlmostEqual(float(rows["shrink_mean:rule"]["cum_net_2026_pct"]), 6.73, places=2)
+        self.assertAlmostEqual(float(rows["turnover_damped_blend:own"]["cum_net_2026_pct"]), 6.61, places=2)
+        self.assertAlmostEqual(float(rows["eb_shrink_mean:rule"]["cum_net_2026_pct"]), 6.33, places=2)
+        self.assertGreater(
+            float(rows["gbrt_rs:own"]["cum_net_2026_pct"]),
+            float(rows["static_ew"]["cum_net_2026_pct"]),
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

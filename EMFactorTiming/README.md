@@ -101,6 +101,23 @@ Evaluated directly on the 312 monthly out-of-sample portfolio return series acro
 | `gbrt_rs:own` (forecast-shrunk GBRT) | +1.1835 | 2.0937 | 1.7050 | 0.2436 | -3.80 | 7.63 |
 | **`turnover_damped_blend` (75% $\kappa=240$ + 25% `gbrt_rs`)** | **+1.3131** | **2.1719** | **2.0122** | **0.1028** | **-3.64** | **8.95** |
 
+### Post-2025 Out-of-Sample Extension Through Latest Trading Day (`2026-01` to `2026-10-21`, 10 Months / 202 Trading Days)
+
+Extended from the JKP `2025-12` cutoff through `2026-10-21` using 49 daily MSCI EM/DM country and style-factor ETFs (`reports/UPDATE_2026-10.md`, `reports/post_2025_oos_2026_10/`):
+
+| Strategy | 2026 YTD Cum Net (%) | 2026 Net Sharpe (20 bp) | 2026 Max DD (%) | Win Months (of 10) | Full 322m (`2000-01 ~ 2026-10`) Net Sharpe |
+|---|---:|---:|---:|---:|---:|
+| **`shrink_mean_k240:rule` ($\kappa=240$)** | **+6.95** | **3.61** | -0.07 | 9 / 10 | **2.0981** |
+| **`shrink_mean:rule` ($\kappa=120$ baseline)** | **+6.73** | **3.71** | -0.10 | 9 / 10 | **1.9594** |
+| **`turnover_damped_blend:own` (75% $\kappa=240$ + 25% `gbrt_rs`)** | **+6.61** | **3.58** | -0.02 | 9 / 10 | **2.0592** |
+| **`eb_shrink_mean:rule` (adaptive $\hat{\kappa}_t$)** | **+6.33** | **3.96** | **-0.01** | 9 / 10 | **1.9765** |
+| `enet_rs:own` (forecast-shrunk elastic net) | +5.78 | 2.67 | -0.19 | 9 / 10 | 1.5640 |
+| `ols_rs:own` (forecast-shrunk OLS) | +5.75 | 2.57 | -0.22 | 9 / 10 | 1.6085 |
+| `gbrt_rs:own` (forecast-shrunk GBRT) | +4.86 | 2.75 | 0.00 | 10 / 10 | 1.7336 |
+| `static_ew` (1/N equal-weight factor portfolio) | +4.07 | 3.55 | -0.06 | 9 / 10 | 1.5155 |
+| `gbrt:own` (unshrunk GBRT) | +3.56 | 2.13 | -0.11 | 9 / 10 | 1.2882 |
+| `gbrt:dm_only` (DM → EM transfer, unshrunk) | +0.22 | 0.14 | -1.49 | 6 / 10 | 0.7061 |
+
 ## Evidence status
 
 | Layer | State |

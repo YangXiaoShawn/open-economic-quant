@@ -9,3 +9,6 @@ __pycache__/
 .DS_Store
 .env
 .env.local
+CryptoFactors/src/crypto_factors/data_binance/
+CryptoFactors/src/crypto_factors/data_perp/
+CryptoFactors/src/crypto_factors/data_okx/

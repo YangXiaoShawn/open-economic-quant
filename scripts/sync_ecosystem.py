@@ -22,7 +22,18 @@ SCRATCH = MONO.parent
 PORTAL_CANDIDATES = sorted(SCRATCH.glob("YangXiaoShawn.github.io*"))
 PORTAL = PORTAL_CANDIDATES[0] if PORTAL_CANDIDATES else SCRATCH / "YangXiaoShawn.github.io"
 
-EXCLUDED = {".DS_Store", ".git", ".mypy_cache", ".pytest_cache", ".ruff_cache", ".venv", "__pycache__"}
+EXCLUDED = {
+    ".DS_Store",
+    ".git",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".venv",
+    "__pycache__",
+    "data_binance",
+    "data_perp",
+    "data_okx",
+}
 
 SYNC_PROJECTS = (
     "CasualLab",
