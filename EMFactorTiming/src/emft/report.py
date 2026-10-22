@@ -3,8 +3,22 @@
 from __future__ import annotations
 
 import json
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+MONOREPO_CORE = PROJECT_ROOT.parent / "packages" / "oeq-core" / "src"
+if MONOREPO_CORE.exists() and str(MONOREPO_CORE) not in sys.path:
+    sys.path.insert(0, str(MONOREPO_CORE))
+
+try:
+    from oeq_core import ClaimBoundary, EvidenceGrade, build_run_manifest, validate_claim_boundary
+except ImportError:  # pragma: no cover
+    ClaimBoundary = None
+    EvidenceGrade = None
+    build_run_manifest = None
+    validate_claim_boundary = None
 
 import matplotlib
 
@@ -68,6 +82,30 @@ def write_report(
         "created_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         **settings,
     }
+    if ClaimBoundary is not None and EvidenceGrade is not None and validate_claim_boundary is not None:
+        boundary = ClaimBoundary(
+            project_slug="em-factor-timing",
+            grade=EvidenceGrade.BACKTEST_ASSOCIATION,
+            allows_causal_language=False,
+            allows_live_profitability_claim=False,
+        )
+        violations = validate_claim_boundary(boundary)
+        if violations:
+            raise ValueError(f"Claim boundary violation: {violations}")
+        oeq_manifest = build_run_manifest(
+            project_slug="em-factor-timing",
+            root=out,
+            files=[
+                out / "coverage.csv",
+                out / "r2_oos.csv",
+                out / "r2_oos_by_country.csv",
+                out / "portfolios.csv",
+                out / "portfolio_monthly.csv",
+            ],
+            evidence_grade=boundary.grade.value,
+        )
+        stamp["claim_boundary_grade"] = boundary.grade.value
+        stamp["artifact_checksums"] = oeq_manifest["artifacts"]
     (out / "run_manifest.json").write_text(json.dumps(stamp, indent=2, default=str))
 
     banner = (

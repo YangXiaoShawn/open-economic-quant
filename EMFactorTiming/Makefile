@@ -1,6 +1,6 @@
 PY ?= python3
 DATA ?= data/raw/
-export PYTHONPATH := src
+export PYTHONPATH := src:../packages/oeq-core/src
 
 .PHONY: setup test validate demo reproduce-sample run coverage robustness extensions tables paper check
 

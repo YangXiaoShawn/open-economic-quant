@@ -1,7 +1,7 @@
 """Scientific claim-boundary enforcement across Open Economic & Quant projects."""
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from enum import Enum
 
 
@@ -22,6 +22,22 @@ class ClaimBoundary:
     allows_live_profitability_claim: bool = False
     passed_pretrend_or_placebo: bool = False
     passed_recovery_gate: bool = False
+
+
+def auto_demote_claim(boundary: ClaimBoundary) -> ClaimBoundary:
+    """Automatically demote over-claimed evidence grades when diagnostic gates fail."""
+    updated = boundary
+    if updated.allows_live_profitability_claim:
+        updated = replace(updated, allows_live_profitability_claim=False)
+    if updated.grade == EvidenceGrade.CAUSAL_IDENTIFIED and not updated.passed_pretrend_or_placebo:
+        updated = replace(
+            updated,
+            grade=EvidenceGrade.ASSOCIATIONAL_ONLY,
+            allows_causal_language=False,
+        )
+    if updated.allows_causal_language and updated.grade != EvidenceGrade.CAUSAL_IDENTIFIED:
+        updated = replace(updated, allows_causal_language=False)
+    return updated
 
 
 def validate_claim_boundary(boundary: ClaimBoundary) -> list[str]:
