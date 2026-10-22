@@ -93,6 +93,13 @@ class TestEMFactorTimingPublishedTables(unittest.TestCase):
             float(rows["static_ew"]["cum_net_2026_pct"]),
         )
 
+        be_path = ROOT / "reports" / "live_readiness_2026_10" / "jkp_2026_cost_breakeven_stress.csv"
+        with be_path.open("r", encoding="utf-8") as fh:
+            be_rows = {r["strategy"]: r for r in csv.DictReader(fh)}
+        self.assertGreater(float(be_rows["shrink_mean_k240:rule"]["breakeven_cost_bps"]), 1500.0)
+        self.assertGreater(float(be_rows["eb_shrink_mean:rule"]["cum_2026_100bp_pct"]), 5.5)
+        self.assertLess(float(be_rows["gbrt:dm_only"]["cum_2026_40bp_pct"]), 0.0)
+
 
 if __name__ == "__main__":
     unittest.main()
