@@ -15,15 +15,19 @@ Unified monorepo for **eight end-to-end applied economics, econometrics, and qua
 | 07 | [`PolymarketFactors/`](PolymarketFactors/) | `polymarket-factors` | Which prediction-market signals survive a realistic backtest? | Five backtest artifacts inflate 30-day momentum IC eightfold (**-0.440 → -0.054**). After correction, illiquidity (**-0.072** price-neutral IC), volatility (**-0.069**), and reversal (**-0.032**) survive out of sample. *Backtest association (~$100–200 capacity).* |
 | 08 | [`CryptoFactors/`](CryptoFactors/) | `crypto-factors` | Do equity microstructure factors travel to crypto? | Most A-share factors fail over 730 days; perpetual **funding (+1.42 Sharpe)**, **retail positioning (+1.39)**, and **low-price range (+1.63)** survive pre-publication, while frozen post-publication tracking (Jun–Aug 2026) returned **-6.5%** without re-fitting. *Backtest & post-publication OOS audit.* |
 
-## Shared Infrastructure (`packages/oeq-core`)
+## Shared Infrastructure (`packages/oeq-core` v0.2.0)
 
 [`packages/oeq-core/`](packages/oeq-core/) provides shared primitives used across the workspace:
-- `oeq_core.provenance`: Deterministic SHA-256 hashing and run-manifest verification.
-- `oeq_core.claim_guard`: Evidence-grade taxonomy and automated claim-boundary enforcement.
-- `oeq_core.factors`: Cross-sectional Rank IC, quadratic price-level residualization ($[1, p, p^2]$), Newey-West $t$-statistics, and turnover-penalized net returns.
+- `oeq_core.manifest`: Deterministic SHA-256 hashing and run-manifest verification (`build_run_manifest`, `verify_manifest_checksums`).
+- `oeq_core.claim_guard`: Evidence-grade taxonomy, automated diagnostic demotion (`auto_demote_claim`), and claim-boundary enforcement (`validate_claim_boundary`).
+- `oeq_core.factors`: Cross-sectional Rank IC, quadratic price-level residualization ($[1, p, p^2]$), Newey-West $t$-statistics, Benjamini-Hochberg FDR $q$-values (`benjamini_hochberg_fdr`), quantile long-short spreads (`quantile_long_short_spread`), volatility-targeted weights (`volatility_target_weights`), walk-forward expanding IC-IR weights (`expanding_ic_ir_weights`), and Empirical Bayes shrinkage weights (`empirical_bayes_shrinkage_weight`).
 
-## Quick Verification
+## Quick Verification & Ecosystem Sync
 
 ```bash
+# Run oeq-core tests, 8-project contract & AST import hygiene checks, and sample reproductions
 make verify-all
+
+# Synchronize subprojects to standalone checkouts, YangXiaoShawn.github.io manifest/evidence, and Space catalogs
+make sync-local
 ```

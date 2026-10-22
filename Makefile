@@ -2,7 +2,7 @@ PY ?= python3
 
 PROJECTS := CasualLab Macroeconomics RealEstate TariffIncidence Microstructure EMFactorTiming PolymarketFactors CryptoFactors
 
-.PHONY: test-core test-factors verify-all
+.PHONY: test-core test-factors test-contracts reproduce-samples verify-all sync-local
 
 test-core:
 	$(PY) packages/oeq-core/tests/test_oeq_core.py
@@ -11,13 +11,18 @@ test-factors:
 	$(PY) EMFactorTiming/tests/test_published_jkp_results.py
 	$(PY) PolymarketFactors/tests/test_published_artifacts.py
 	$(PY) CryptoFactors/tests/test_published_results.py
+	$(PY) CryptoFactors/tests/test_factor_fixtures.py
+	$(PY) CryptoFactors/tests/test_postpub_windows.py
 
-verify-all: test-core test-factors
-	@for dir in $(PROJECTS); do \
-		test -f "$$dir/project.yaml" || { echo "Missing $$dir/project.yaml"; exit 1; }; \
-		test -f "$$dir/pyproject.toml" || { echo "Missing $$dir/pyproject.toml"; exit 1; }; \
-		test -f "$$dir/Makefile" || { echo "Missing $$dir/Makefile"; exit 1; }; \
-		test -f "$$dir/STATUS.md" || { echo "Missing $$dir/STATUS.md"; exit 1; }; \
-		test -f "$$dir/AGENTS.md" || { echo "Missing $$dir/AGENTS.md"; exit 1; }; \
-	done
-	@echo "monorepo-verify-ok projects=8"
+test-contracts:
+	$(PY) tests/test_monorepo_contracts.py
+
+reproduce-samples:
+	PYTHONPATH=PolymarketFactors/src:packages/oeq-core/src $(PY) -m polymarket_factors.cli reproduce-sample
+	PYTHONPATH=CryptoFactors/src:packages/oeq-core/src $(PY) -m crypto_factors.cli reproduce-sample
+
+verify-all: test-core test-factors test-contracts reproduce-samples
+	$(PY) scripts/verify_monorepo.py
+
+sync-local:
+	$(PY) scripts/sync_ecosystem.py --sync-local
