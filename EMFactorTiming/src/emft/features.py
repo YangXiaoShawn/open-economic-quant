@@ -98,6 +98,13 @@ def build_features(panel: pd.DataFrame, hist_min: int = 24, kappa: float = 120.0
     shrink_mean = (n_own * hist_mean + kappa * pooled) / (n_own + kappa)
     shrink_mean = shrink_mean.where(hist_mean.notna())
 
+    # Empirical Bayes adaptive shrinkage: kappa_t = clip(within_var / between_var, 12, 600)
+    within_var = R.expanding(min_periods=hist_min).var().clip(lower=1e-8)
+    between_var = ((hist_mean - pooled) ** 2).expanding(min_periods=hist_min).mean().clip(lower=1e-6)
+    eb_kappa = (within_var / between_var).clip(lower=12.0, upper=600.0)
+    eb_shrink_mean = (n_own * hist_mean + eb_kappa * pooled) / (n_own + eb_kappa)
+    eb_shrink_mean = eb_shrink_mean.where(hist_mean.notna())
+
     target = R.shift(-1)
 
     def stack(frame: pd.DataFrame, name: str) -> pd.Series:
@@ -107,7 +114,12 @@ def build_features(panel: pd.DataFrame, hist_min: int = 24, kappa: float = 120.0
 
     out = pd.concat(
         [stack(feats[k], k) for k in FEATURES]
-        + [stack(hist_mean, "hist_mean"), stack(shrink_mean, "shrink_mean"), stack(target, "target")],
+        + [
+            stack(hist_mean, "hist_mean"),
+            stack(shrink_mean, "shrink_mean"),
+            stack(eb_shrink_mean, "eb_shrink_mean"),
+            stack(target, "target"),
+        ],
         axis=1,
     )
     out.index.names = ["month", "country", "factor"]

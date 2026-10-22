@@ -72,6 +72,10 @@ def timing_weights(g: pd.DataFrame, how: str) -> np.ndarray:
     if how == "sign":
         s = np.sign(g["pred"].to_numpy())
         return s / max(np.abs(s).sum(), 1)
+    if how == "long_only":
+        p = np.maximum(g["pred"].to_numpy(), 0.0)
+        tot = p.sum()
+        return p / tot if tot > 0 else np.full(n, 1.0 / n)
     p = g["pred"].to_numpy()
     tot = np.abs(p).sum()
     return p / tot if tot > 0 else np.full(n, 1.0 / n)

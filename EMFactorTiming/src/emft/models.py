@@ -26,7 +26,7 @@ from sklearn.preprocessing import StandardScaler
 from .features import FEATURES
 
 LEARNED = ("ols", "enet", "gbrt", "nn")
-RULES = ("hist_mean", "shrink_mean", "fmom")
+RULES = ("hist_mean", "shrink_mean", "eb_shrink_mean", "fmom")
 # Real-time forecast shrinkage: "<model>_rs" scales the model's forecast deviation from
 # the shrinkage mean by a slope estimated inside the training window (see Forecaster.fit).
 SCALED = tuple(f"{m}_rs" for m in LEARNED)
@@ -99,6 +99,8 @@ class Forecaster:
             return test["hist_mean"].to_numpy()
         if self.name == "shrink_mean":
             return test["shrink_mean"].to_numpy()
+        if self.name == "eb_shrink_mean":
+            return test["eb_shrink_mean"].to_numpy()
         if self.name == "fmom":
             return test["own_m12"].to_numpy()
         return test["shrink_mean"].to_numpy() + self.scale * self.deviation(test)

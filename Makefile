@@ -8,6 +8,7 @@ test-core:
 	$(PY) packages/oeq-core/tests/test_oeq_core.py
 
 test-factors:
+	$(PY) Microstructure/tests/test_maker_fee_sensitivity.py
 	$(PY) EMFactorTiming/tests/test_published_jkp_results.py
 	$(PY) PolymarketFactors/tests/test_published_artifacts.py
 	$(PY) CryptoFactors/tests/test_published_results.py

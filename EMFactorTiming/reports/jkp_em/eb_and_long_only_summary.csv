@@ -1,0 +1,7 @@
+specification,kappa_specification,portfolio_constraint,r2_vs_hist_pct,r2_vs_shrink_pct,cw_t_vs_hist,sharpe_gross,sharpe_net_20bp,monthly_turnover
+shrink_mean:rule,Fixed kappa=120,Unconstrained proportional,1.2025,0.0000,9.05,1.9812,1.9054,0.0442
+eb_shrink_mean:rule,"Empirical Bayes adaptive kappa_t (median 134, IQR 96-178)",Unconstrained proportional,1.2180,0.0157,9.14,1.9940,1.9168,0.0458
+shrink_mean:rule:long_only,Fixed kappa=120,Long-only (max(pred,0)),1.2025,0.0000,9.05,1.8940,1.8315,0.0365
+eb_shrink_mean:rule:long_only,"Empirical Bayes adaptive kappa_t (median 134, IQR 96-178)",Long-only (max(pred,0)),1.2180,0.0157,9.14,1.9065,1.8428,0.0374
+enet:pooled:long_only,Fixed kappa=120 anchor,Long-only (max(pred,0)),1.1588,-0.0442,8.52,1.7620,1.6110,0.0885
+gbrt:own:long_only,Fixed kappa=120 anchor,Long-only (max(pred,0)),0.7311,-0.4772,5.68,1.5120,1.3045,0.1210

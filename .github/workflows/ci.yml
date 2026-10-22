@@ -32,6 +32,7 @@ jobs:
 
       - name: Run factor & post-publication verification suites
         run: |
+          python Microstructure/tests/test_maker_fee_sensitivity.py
           python EMFactorTiming/tests/test_published_jkp_results.py
           python PolymarketFactors/tests/test_published_artifacts.py
           python CryptoFactors/tests/test_published_results.py

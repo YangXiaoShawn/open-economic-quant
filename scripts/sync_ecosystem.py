@@ -85,6 +85,8 @@ def sync_local_files(projects: list[str]) -> dict[str, int]:
             if not p.is_file() or any(part in EXCLUDED for part in p.parts):
                 continue
             rel = f"{proj}/{p.relative_to(src_dir).as_posix()}"
+            if rel.startswith(("Microstructure/artifacts/", "Microstructure/data/raw/")):
+                continue
             files.append({"path": rel, "size_bytes": p.stat().st_size})
 
     manifest["files"] = files
@@ -163,6 +165,9 @@ def push_all(projects: list[str], message: str) -> dict[str, str]:
                 if any(part in EXCLUDED for part in p.parts):
                     continue
                 rel = p.relative_to(src)
+                rel_str = f"{proj}/{rel.as_posix()}"
+                if rel_str.startswith(("Microstructure/artifacts/", "Microstructure/data/raw/")):
+                    continue
                 target = dst / rel
                 if p.is_dir():
                     target.mkdir(parents=True, exist_ok=True)
@@ -213,7 +218,7 @@ def main() -> None:
     ap = argparse.ArgumentParser(description="Synchronize Open Economic & Quant ecosystem")
     ap.add_argument(
         "--projects",
-        default="EMFactorTiming,PolymarketFactors,CryptoFactors",
+        default="Microstructure,EMFactorTiming,PolymarketFactors,CryptoFactors",
         help="Comma-separated list of project directories to sync",
     )
     ap.add_argument("--verify-only", action="store_true", help="Run monorepo verification only")
