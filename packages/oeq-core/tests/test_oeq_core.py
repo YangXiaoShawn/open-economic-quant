@@ -18,6 +18,7 @@ from oeq_core import (
     cross_sectional_rank_ic,
     empirical_bayes_shrinkage_weight,
     expanding_ic_ir_weights,
+    inverse_volatility_weights,
     newey_west_tstat,
     quantile_long_short_spread,
     residualize_quadratic,
@@ -81,6 +82,15 @@ class TestOeqCore(unittest.TestCase):
         self.assertLess(ic_w["PM-LIQ"], 0.0)
         lam = empirical_bayes_shrinkage_weight(own_variance=0.04, cross_sectional_variance=0.001, n_obs=60)
         self.assertTrue(0.0 < lam < 1.0)
+        iv_w = inverse_volatility_weights(
+            {
+                "low_vol": [0.001, -0.001, 0.0015, -0.0012, 0.0008, -0.0009],
+                "high_vol": [0.02, -0.02, 0.03, -0.025, 0.015, -0.018],
+            },
+            min_periods=4,
+        )
+        self.assertAlmostEqual(sum(iv_w.values()), 1.0, places=6)
+        self.assertGreater(iv_w["low_vol"], iv_w["high_vol"])
 
 
 if __name__ == "__main__":

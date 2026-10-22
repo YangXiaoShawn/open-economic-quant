@@ -6,6 +6,7 @@ from oeq_core.factors import (
     cross_sectional_rank_ic,
     empirical_bayes_shrinkage_weight,
     expanding_ic_ir_weights,
+    inverse_volatility_weights,
     newey_west_tstat,
     quantile_long_short_spread,
     residualize_quadratic,
@@ -24,6 +25,7 @@ __all__ = [
     "cross_sectional_rank_ic",
     "empirical_bayes_shrinkage_weight",
     "expanding_ic_ir_weights",
+    "inverse_volatility_weights",
     "newey_west_tstat",
     "quantile_long_short_spread",
     "residualize_quadratic",
@@ -32,4 +34,4 @@ __all__ = [
     "verify_manifest_checksums",
     "volatility_target_weights",
 ]
-__version__ = "0.2.0"
+__version__ = "0.2.1"

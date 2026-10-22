@@ -88,6 +88,19 @@ paper `paper/draft.pdf`.
   costs and signed by the original studies; read them comparatively. Negative and fragile
   results are listed in `reports/failed_hypotheses.md`.
 
+### v2.0 Real-Data Empirical Validation (312 Monthly JKP Portfolios, 2000-01 to 2025-12)
+
+Evaluated directly on the 312 monthly out-of-sample portfolio return series across `reports/jkp_em*/portfolio_monthly.csv` (`reports/jkp_em/eb_and_long_only_summary.csv`):
+
+| Specification | OOS $R^2$ vs Own (%) | Gross Sharpe | Net Sharpe (20 bp) | Turnover / mo | Max DD (%) | NW $t$ (net) |
+|---|---:|---:|---:|---:|---:|---:|
+| `shrink_mean:rule` ($\kappa = 60$) | +0.9759 | 1.8337 | 1.7315 | 0.0648 | -3.26 | 8.19 |
+| `shrink_mean:rule` ($\kappa = 120$ baseline) | +1.2025 | 1.9979 | 1.9054 | 0.0606 | -3.43 | 8.77 |
+| `shrink_mean:rule` ($\kappa = 240$) | +1.3564 | 2.1325 | 2.0522 | 0.0558 | -3.60 | 9.15 |
+| `eb_shrink_mean:rule` (36m adaptive $\kappa_t$) | +1.2116 | 2.0113 | 1.9186 | 0.0605 | -3.43 | 8.81 |
+| `gbrt_rs:own` (forecast-shrunk GBRT) | +1.1835 | 2.0937 | 1.7050 | 0.2436 | -3.80 | 7.63 |
+| **`turnover_damped_blend` (75% $\kappa=240$ + 25% `gbrt_rs`)** | **+1.3131** | **2.1719** | **2.0122** | **0.1028** | **-3.64** | **8.95** |
+
 ## Evidence status
 
 | Layer | State |

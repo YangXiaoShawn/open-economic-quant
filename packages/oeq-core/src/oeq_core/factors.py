@@ -163,6 +163,28 @@ def expanding_ic_ir_weights(ic_history: dict[str, Sequence[float]], min_periods:
     return {k: v / denom for k, v in raw_scores.items()}
 
 
+def inverse_volatility_weights(
+    return_history: dict[str, Sequence[float]],
+    min_periods: int = 20,
+    vol_floor: float = 1e-4,
+) -> dict[str, float]:
+    """Compute strictly non-negative risk-parity weights proportional to inverse realized volatility."""
+    n = max(1, len(return_history))
+    inv_vols: dict[str, float] = {}
+    for factor, series in return_history.items():
+        vals = [float(x) for x in series]
+        if len(vals) < min_periods:
+            return {k: 1.0 / n for k in return_history}
+        mean = sum(vals) / len(vals)
+        var = sum((x - mean) ** 2 for x in vals) / max(1, len(vals) - 1)
+        std = max(math.sqrt(max(var, 0.0)), float(vol_floor))
+        inv_vols[factor] = 1.0 / std
+    denom = sum(inv_vols.values())
+    if denom <= 1e-12:
+        return {k: 1.0 / n for k in return_history}
+    return {k: v / denom for k, v in inv_vols.items()}
+
+
 def empirical_bayes_shrinkage_weight(
     own_variance: float,
     cross_sectional_variance: float,

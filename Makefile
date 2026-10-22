@@ -8,6 +8,10 @@ test-core:
 	$(PY) packages/oeq-core/tests/test_oeq_core.py
 
 test-factors:
+	$(PY) CasualLab/tests/test_real_nyc_sample_diagnostics.py
+	$(PY) Macroeconomics/tests/test_vintage_manifest_and_claim_guard.py
+	$(PY) RealEstate/tests/test_lockin_profile_and_claim_guard.py
+	$(PY) TariffIncidence/tests/test_real_section301_results.py
 	$(PY) Microstructure/tests/test_maker_fee_sensitivity.py
 	$(PY) EMFactorTiming/tests/test_published_jkp_results.py
 	$(PY) PolymarketFactors/tests/test_published_artifacts.py
