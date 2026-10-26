@@ -18,7 +18,7 @@ Unified monorepo for **eight end-to-end applied economics, econometrics, and qua
 ## Shared Infrastructure (`packages/oeq-core` v0.2.1)
 
 [`packages/oeq-core/`](packages/oeq-core/) provides shared primitives used across the workspace:
-- `oeq_core.manifest`: Deterministic SHA-256 hashing and run-manifest verification (`build_run_manifest`, `verify_manifest_checksums`).
+- `oeq_core.provenance`: Deterministic SHA-256 hashing and run-manifest verification (`build_run_manifest`, `verify_manifest_checksums`).
 - `oeq_core.claim_guard`: Evidence-grade taxonomy, automated diagnostic demotion (`auto_demote_claim`), and claim-boundary enforcement (`validate_claim_boundary`).
 - `oeq_core.factors`: Cross-sectional Rank IC, quadratic price-level residualization ($[1, p, p^2]$), Newey-West $t$-statistics, Benjamini-Hochberg FDR $q$-values (`benjamini_hochberg_fdr`), quantile long-short spreads (`quantile_long_short_spread`), volatility-targeted weights (`volatility_target_weights`), walk-forward expanding IC-IR weights (`expanding_ic_ir_weights`), inverse-volatility risk-parity weights (`inverse_volatility_weights`), and Empirical Bayes shrinkage weights (`empirical_bayes_shrinkage_weight`).
 
