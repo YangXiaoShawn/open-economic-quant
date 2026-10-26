@@ -19,11 +19,18 @@ from casuallab.nyc_events import (
     write_nyc_events_bundle,
 )
 
+RAW_EVENTS = Path(__file__).resolve().parents[1] / "data/nyc_events/raw"
+HOLIDAY_SNAPSHOT = RAW_EVENTS / "official_holidays_2024-01.csv"
+EVENT_SNAPSHOT = RAW_EVENTS / "nyc_permitted_events_overlap_2024-01.csv"
 
+
+@pytest.mark.skipif(
+    not (HOLIDAY_SNAPSHOT.exists() and EVENT_SNAPSHOT.exists()),
+    reason="raw NYC event snapshots are gitignored (rights unknown); they ship only in the HF dataset",
+)
 def test_committed_january_snapshots_match_pinned_official_contract() -> None:
-    root = Path(__file__).resolve().parents[1]
-    holiday_path = root / "data/nyc_events/raw/official_holidays_2024-01.csv"
-    event_path = root / "data/nyc_events/raw/nyc_permitted_events_overlap_2024-01.csv"
+    holiday_path = HOLIDAY_SNAPSHOT
+    event_path = EVENT_SNAPSHOT
 
     assert holiday_path.stat().st_size == 185
     assert event_path.stat().st_size == 1_307_528

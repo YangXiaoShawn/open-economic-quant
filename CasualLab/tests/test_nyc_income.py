@@ -21,10 +21,15 @@ from casuallab.nyc_income import (
     write_nyc_income_bundle,
 )
 
+RAW_INCOME = Path(__file__).resolve().parents[1] / "data/nyc_income/raw"
 
+
+@pytest.mark.skipif(
+    not (RAW_INCOME / "source_manifest.json").exists(),
+    reason="raw NYC income sources are gitignored (rights unknown); they ship only in the HF dataset",
+)
 def test_committed_income_sources_match_pins_and_source_manifest() -> None:
-    root = Path(__file__).resolve().parents[1]
-    raw = root / "data/nyc_income/raw"
+    raw = RAW_INCOME
     config = NYCIncomeConfig()
     expected = {
         "taxi_zones.zip": config.expected_taxi_sha256,
