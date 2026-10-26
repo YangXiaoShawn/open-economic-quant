@@ -1,0 +1,11 @@
+factor_or_benchmark,ret_10_21_pct,ret_10_22_pct,ret_10_23_pct,two_day_10_22_to_10_23_pct,oct_mtd_thru_10_23_pct,ytd_2026_thru_10_23_pct
+investment (IWD-IWF),-0.69,3.09,-0.23,2.85,8.47,19.73
+value (VLUE-SPY & DEM-EEM),-0.2,1.03,-0.12,0.91,1.29,14.65
+low_risk (USMV-SPY & EEMV-EEM),-0.3,1.65,-0.25,1.4,5.0,-2.68
+size (IWM-SPY & DGS-EEM),-0.29,0.9,-0.16,0.74,1.82,-2.32
+quality (QUAL-SPY),-0.36,0.53,-0.26,0.26,0.59,0.34
+em_multifactor (EMGF-EEM),-0.14,0.05,-0.04,0.01,0.13,1.64
+momentum (MTUM-SPY),0.73,-2.49,0.83,-1.68,-8.41,4.34
+EM_22_Countries_EW,0.12,-1.57,-0.24,-1.81,-2.82,6.11
+EEM_Benchmark,0.39,-2.91,0.47,-2.45,-7.16,13.93
+SPY_Benchmark,0.53,-1.18,-0.52,-1.7,-0.35,12.32
