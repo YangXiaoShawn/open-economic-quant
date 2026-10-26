@@ -11,8 +11,8 @@
 - Expanding-window annual refits with three training scopes (EM, DM-only, pooled);
   OLS, elastic net, gradient-boosted trees, neural-net ensemble; rules: own mean,
   shrinkage mean, factor momentum.
-- 15 tests pass (loader, macro loader, leakage, market history, signal recovery, null, transfer,
-  real-time forecast shrinkage).
+- 19 tests pass as of 2026-10-26 (loader, macro loader, leakage, market history, signal recovery,
+  null, transfer, real-time forecast shrinkage, published JKP result tables).
   Size/power: 87.5% null rejection vs the own mean, 5.0% vs the shrinkage mean.
 - **Main run** `reports/jkp_em/` (JKP all countries, 153 factors, monthly, capped VW;
   downloaded 2026-09-29, data to 2025-12; 22 EM markets; incl. neural net).

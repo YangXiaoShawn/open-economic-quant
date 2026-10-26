@@ -34,7 +34,8 @@ and any live-market causal conclusion remain future work.
   3,839,901,696 bytes (3.58 GiB) and peak footprint 6,313,925,232 bytes (5.88 GiB).
 - Two single-threaded full-month reruns produced identical bytes for all 201 data files. The data
   and analysis manifests independently validate 201/201 and 13/13 entries.
-- `make test`: 246 tests passed.
+- `make test`: 246 tests passed when this record was made; the suite now collects 247 tests
+  (`pytest --collect-only`, 2026-10-26).
 - `make lint`: Ruff passed.
 - `pip check`: no broken requirements.
 - Streamlit's test runner completed the initial render and an on-demand scenario without an
