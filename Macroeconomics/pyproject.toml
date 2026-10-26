@@ -22,6 +22,9 @@ dependencies = [
   "scipy>=1.14",
   "statsmodels>=0.14.4",
   "streamlit>=1.42",
+  # Shared monorepo package, pinned by commit so this project installs standalone;
+  # inside the monorepo, uv uses the workspace copy (root tool.uv.sources).
+  "oeq-core @ git+https://github.com/YangXiaoShawn/open-economic-quant@3d309b7e90ca7b970bb5396d3bb781c92de4ea7e#subdirectory=packages/oeq-core",
 ]
 
 [project.optional-dependencies]
@@ -33,6 +36,9 @@ dev = [
 
 [project.scripts]
 macro-nowcast = "macro_nowcast.cli:main"
+
+[tool.hatch.metadata]
+allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/macro_nowcast"]

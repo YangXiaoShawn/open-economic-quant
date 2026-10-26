@@ -22,3 +22,8 @@ members = [
   "PolymarketFactors",
   "CryptoFactors",
 ]
+
+# Members declare oeq-core as a commit-pinned git dependency so each split
+# repository installs standalone; inside the workspace, use the local copy.
+[tool.uv.sources]
+oeq-core = { workspace = true }
