@@ -109,11 +109,25 @@ class TestSyncEcosystem(unittest.TestCase):
         self.assertEqual(withheld, [])
         self.assertEqual(len(published), 7)
 
-    def test_licensed_project_is_not_restricted(self) -> None:
+    def test_licensed_project_withholds_only_gitignored_files(self) -> None:
         root = self._workspace("Source-specific terms apply.")
         published, withheld = hf_upload_plan("Proj", root=root)
-        self.assertEqual(withheld, [])
-        self.assertIn("data/raw/download.parquet", published)
+        self.assertEqual(withheld, ["artifacts/full_month.csv", "data/raw/download.parquet"])
+        self.assertIn("data/nyc_full/panel.parquet", published)
+        self.assertIn("reports/raw/tracked_table.csv", published)
+
+    def test_allowlisted_gitignored_results_are_published(self) -> None:
+        root = self.tmp / "ws"
+        proj = root / "CryptoFactors"
+        _git(self.tmp, "init", "-q", str(root))
+        _write(proj / ".gitignore", "data/*\n")
+        _write(proj / "project.yaml", "data_license: Aggregated result tables are published.\n")
+        _write(proj / "data" / "results" / "report.csv")
+        _write(proj / "data" / "raw_dump" / "trades.csv")
+        _git(root, "add", "CryptoFactors/.gitignore", "CryptoFactors/project.yaml")
+        published, withheld = hf_upload_plan("CryptoFactors", root=root)
+        self.assertIn("data/results/report.csv", published)
+        self.assertEqual(withheld, ["data/raw_dump/trades.csv"])
 
     def test_rights_unknown_projects_in_this_repo_are_detected(self) -> None:
         for proj in ("CasualLab", "Macroeconomics"):

@@ -63,17 +63,26 @@ STANDALONE_REMOTES = {
 # Never published to the Hugging Face dataset, whatever the project's data license says.
 HF_NEVER_UPLOAD = ("Microstructure/artifacts/", "Microstructure/data/raw/")
 UNKNOWN_LICENSE_MARKER = "RIGHTS_UNKNOWN"
+# Gitignored paths that are nevertheless published to the dataset (aggregated result
+# tables and data-access notes); every other gitignored file stays local by default.
+HF_PUBLISH_IGNORED: dict[str, tuple[str, ...]] = {
+    "CryptoFactors": ("data/DATA_ACCESS.md", "data/results/"),
+    "PolymarketFactors": ("data/DATA_ACCESS.md",),
+}
 
 
-def git_tracked_files(repo: Path, subdir: str | None = None) -> set[str] | None:
-    """Return paths tracked in the git index of ``repo`` (relative to ``subdir`` when given).
+def git_ls_files(repo: Path, subdir: str | None = None, ignored: bool = False) -> set[str] | None:
+    """Return paths in the git index of ``repo`` (relative to ``subdir`` when given).
 
-    Returns None when ``repo`` is not the root of a git checkout, so callers never act on
-    the index of an enclosing repository by accident.
+    With ``ignored``, return the untracked files git ignores instead. Returns None when
+    ``repo`` is not the root of a git checkout, so callers never act on the index of an
+    enclosing repository by accident.
     """
     if not (repo / ".git").exists():
         return None
     cmd = ["git", "-C", str(repo), "ls-files", "-z"]
+    if ignored:
+        cmd += ["--others", "--ignored", "--exclude-standard"]
     if subdir:
         cmd += ["--", subdir]
     try:
@@ -104,7 +113,7 @@ def mirror_project(src_dir: Path, dst_dir: Path, delete: bool = True) -> list[st
     removed: list[str] = []
     if delete:
         dst_root = dst_dir.resolve()
-        for rel in sorted(git_tracked_files(dst_dir) or ()):
+        for rel in sorted(git_ls_files(dst_dir) or ()):
             parts = rel.split("/")
             if parts[0] == ".git" or any(part in EXCLUDED for part in parts):
                 continue
@@ -142,14 +151,16 @@ def project_data_license(proj_dir: Path) -> str:
 def hf_upload_plan(proj: str, allow_unknown_license: bool = False, root: Path = MONO) -> tuple[list[str], list[str]]:
     """Split a project's files into (published, withheld) paths for the Hugging Face dataset.
 
-    A project whose project.yaml declares ``data_license: RIGHTS_UNKNOWN`` only publishes
-    files already tracked in git, and never anything under a ``raw/`` directory, so
-    gitignored or untracked third-party data (raw downloads, full-month extracts) is not
-    redistributed. ``allow_unknown_license`` lifts the restriction.
+    Gitignored files (raw downloads, registered or licensed extracts, local caches) are
+    withheld unless listed in HF_PUBLISH_IGNORED. A project whose project.yaml declares
+    ``data_license: RIGHTS_UNKNOWN`` additionally publishes only files tracked in git and
+    nothing under a ``raw/`` directory. ``allow_unknown_license`` lifts both restrictions.
     """
     src_dir = root / proj
-    restricted = UNKNOWN_LICENSE_MARKER in project_data_license(src_dir) and not allow_unknown_license
-    tracked = git_tracked_files(root, proj) if restricted else None
+    guarded = not allow_unknown_license
+    unknown_rights = UNKNOWN_LICENSE_MARKER in project_data_license(src_dir)
+    tracked = git_ls_files(root, proj) if guarded else set()
+    ignored = git_ls_files(root, proj, ignored=True) if guarded else set()
     published: list[str] = []
     withheld: list[str] = []
     for p in sorted(src_dir.rglob("*")):
@@ -158,7 +169,12 @@ def hf_upload_plan(proj: str, allow_unknown_license: bool = False, root: Path = 
         rel = p.relative_to(src_dir).as_posix()
         if any(part in EXCLUDED for part in rel.split("/")) or f"{proj}/{rel}".startswith(HF_NEVER_UPLOAD):
             continue
-        if restricted and (tracked is None or rel not in tracked or "raw" in rel.split("/")[:-1]):
+        if guarded and (
+            tracked is None
+            or ignored is None
+            or (rel in ignored and not rel.startswith(HF_PUBLISH_IGNORED.get(proj, ())))
+            or (unknown_rights and (rel not in tracked or "raw" in rel.split("/")[:-1]))
+        ):
             withheld.append(rel)
         else:
             published.append(rel)
@@ -169,9 +185,12 @@ def report_withheld(proj: str, withheld: list[str], root: Path = MONO) -> None:
     if not withheld:
         return
     size = sum((root / proj / rel).stat().st_size for rel in withheld)
+    reason = "gitignored" if UNKNOWN_LICENSE_MARKER not in project_data_license(root / proj) else (
+        f"gitignored, untracked or raw/ data of a {UNKNOWN_LICENSE_MARKER} project"
+    )
     print(
-        f"hf-skip {proj}: withholding {len(withheld)} files ({size / 1e6:.1f} MB) because "
-        f"project.yaml data_license is {UNKNOWN_LICENSE_MARKER}; pass --allow-unknown-license to publish them"
+        f"hf-skip {proj}: withholding {len(withheld)} files ({size / 1e6:.1f} MB): {reason}; "
+        "pass --allow-unknown-license once redistribution rights are confirmed"
     )
     groups = Counter("/".join(rel.split("/")[:2]) if "/" in rel else rel for rel in withheld)
     for group, count in sorted(groups.items()):
@@ -346,7 +365,10 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument(
         "--allow-unknown-license",
         action="store_true",
-        help="Also publish untracked, gitignored and raw/ files of projects whose data_license is RIGHTS_UNKNOWN",
+        help=(
+            "Publish every file on disk to the HF dataset, including gitignored files and the untracked "
+            "or raw/ files of projects whose data_license is RIGHTS_UNKNOWN"
+        ),
     )
     return ap
 
