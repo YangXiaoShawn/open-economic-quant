@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Tariff Incidence, Supply-Chain Reallocation, and Domestic Propagation"
 readme = "README.md"
 requires-python = ">=3.12"
+license = { text = "MIT" }
 dependencies = [
     "polars>=1.17",
     "duckdb>=1.1",
