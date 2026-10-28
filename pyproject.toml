@@ -3,7 +3,7 @@ name = "open-economic-quant"
 version = "0.2.0"
 description = "Unified monorepo for the eight Open Economic & Quant applied economics and quantitative finance research systems"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 license = { text = "MIT" }
 authors = [{ name = "Yang Xiao" }]
 
