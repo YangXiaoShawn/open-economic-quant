@@ -23,7 +23,10 @@ repository records how to reconstruct them from the documented official sources.
 >
 > The pipeline runs on **official U.S. Census data** (provenance `OFFICIAL`).
 > 923,440 HS10 × country × month observations, 2017-01 to 2020-02, covering all
-> four Section 301 actions.
+> four Section 301 actions. That is the full analytical panel; the stacked event
+> study below is estimated on 395,468 stacked observations (each wave's −12 to +10
+> month window with never-treated controls, which repeat across the wave stacks;
+> 535,132 with not-yet-treated controls).
 >
 > Under a **stacked multi-wave design**, each outcome is licensed separately and
 > the reports say which, first, before any number:
@@ -140,8 +143,11 @@ duty). A near-null effect now gets a **bound** rather than a failing grade.
 Against a never-treated-product counterfactual, China ran **−$2.26bn/month**
 below counterfactual on the targeted products. Third countries ran
 **+$252mn/month above** their own counterfactual, giving an adjusted replacement
-ratio of **0.11**: roughly a ninth of what China lost reappeared from other
-suppliers within this window.
+ratio of **0.11** (0.1116, measured in customs value across 1,376 treated HS6
+headings): roughly a ninth of what China lost reappeared from other suppliers
+within this window. This is a **qualified** finding
+(`reports/research_conclusions.md` §2): unlike the landed and customs unit-value
+outcomes, the quantity outcome fails its date placebo.
 
 Substitutability was worst where exposure was largest. Splitting products by
 pre-tariff dependence on China, those the U.S. relied on most replaced **14%** of

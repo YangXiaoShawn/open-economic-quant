@@ -1,0 +1,235 @@
+schema_version = 1
+
+[defaults]
+provenance_label = "synthetic_fixture"
+data_mode = "synthetic_fixture"
+is_default = true
+
+[[targets]]
+series_id = "PAYEMS"
+name = "payems_change_mom_thousands"
+frequency = "monthly"
+transformation = "difference"
+annualization = "not_applicable"
+units = "thousands_of_persons_change_mom"
+horizon = 0
+
+[targets.evaluation]
+start = "2021-02-01"
+end = "2024-12-01"
+latest_vintage = "2025-03-31"
+minimum_train_periods = 36
+
+[[targets.features]]
+name = "payems_change_lag1"
+series_id = "PAYEMS"
+frequency = "monthly"
+transformation = "difference"
+aggregation = "latest"
+lag_periods = 1
+
+[[targets.features]]
+name = "icsa_4w_mean"
+series_id = "ICSA"
+frequency = "weekly"
+transformation = "level"
+aggregation = "trailing_mean"
+window = 4
+
+[[targets.features]]
+name = "ccsa_4w_mean"
+series_id = "CCSA"
+frequency = "weekly"
+transformation = "level"
+aggregation = "trailing_mean"
+window = 4
+
+[[targets.features]]
+name = "unrate_level"
+series_id = "UNRATE"
+frequency = "monthly"
+transformation = "level"
+aggregation = "latest"
+
+[[targets.features]]
+name = "awhman_change"
+series_id = "AWHMAN"
+frequency = "monthly"
+transformation = "difference"
+aggregation = "latest"
+
+[[targets.features]]
+name = "indpro_pct_change"
+series_id = "INDPRO"
+frequency = "monthly"
+transformation = "percent_change"
+aggregation = "latest"
+
+[[targets.features]]
+name = "rsafs_pct_change"
+series_id = "RSAFS"
+frequency = "monthly"
+transformation = "percent_change"
+aggregation = "latest"
+
+[[targets.features]]
+name = "houst_log_change"
+series_id = "HOUST"
+frequency = "monthly"
+transformation = "log_change"
+aggregation = "latest"
+
+[[targets.features]]
+name = "umcsent_change"
+series_id = "UMCSENT"
+frequency = "monthly"
+transformation = "difference"
+aggregation = "latest"
+
+[[targets.features]]
+name = "dgs10_20d_mean"
+series_id = "DGS10"
+frequency = "daily"
+transformation = "level"
+aggregation = "trailing_mean"
+window = 20
+
+[[targets]]
+series_id = "CPILFESL"
+name = "core_cpi_pct_change_mom"
+frequency = "monthly"
+transformation = "percent_change"
+annualization = "nonannualized"
+units = "percent_change_mom_nonannualized"
+horizon = 0
+
+[targets.evaluation]
+start = "2021-02-01"
+end = "2024-12-01"
+latest_vintage = "2025-03-31"
+minimum_train_periods = 36
+
+[[targets.features]]
+name = "core_cpi_change_lag1"
+series_id = "CPILFESL"
+frequency = "monthly"
+transformation = "percent_change"
+aggregation = "latest"
+lag_periods = 1
+
+[[targets.features]]
+name = "payems_change"
+series_id = "PAYEMS"
+frequency = "monthly"
+transformation = "difference"
+aggregation = "latest"
+
+[[targets.features]]
+name = "unrate_for_inflation"
+series_id = "UNRATE"
+frequency = "monthly"
+transformation = "level"
+aggregation = "latest"
+
+[[targets.features]]
+name = "indpro_for_inflation"
+series_id = "INDPRO"
+frequency = "monthly"
+transformation = "percent_change"
+aggregation = "latest"
+
+[[targets.features]]
+name = "retail_sales_for_inflation"
+series_id = "RSAFS"
+frequency = "monthly"
+transformation = "percent_change"
+aggregation = "latest"
+
+[[targets.features]]
+name = "sentiment_for_inflation"
+series_id = "UMCSENT"
+frequency = "monthly"
+transformation = "difference"
+aggregation = "latest"
+
+[[targets.features]]
+name = "dgs10_20d_for_inflation"
+series_id = "DGS10"
+frequency = "daily"
+transformation = "level"
+aggregation = "trailing_mean"
+window = 20
+
+[[targets]]
+series_id = "GDPC1"
+name = "real_gdp_pct_change_qoq_saar"
+frequency = "quarterly"
+transformation = "annualized_percent_change"
+annualization = "saar"
+units = "percent_change_qoq_saar"
+horizon = 0
+
+[targets.evaluation]
+start = "2021-01-01"
+end = "2024-10-01"
+latest_vintage = "2025-03-31"
+minimum_train_periods = 12
+
+[[targets.features]]
+name = "real_gdp_change_lag1_saar"
+series_id = "GDPC1"
+frequency = "quarterly"
+transformation = "annualized_percent_change"
+aggregation = "latest"
+lag_periods = 1
+
+[[targets.features]]
+name = "payroll_for_gdp"
+series_id = "PAYEMS"
+frequency = "monthly"
+transformation = "difference"
+aggregation = "latest"
+
+[[targets.features]]
+name = "core_cpi_for_gdp"
+series_id = "CPILFESL"
+frequency = "monthly"
+transformation = "percent_change"
+aggregation = "latest"
+
+[[targets.features]]
+name = "indpro_for_gdp"
+series_id = "INDPRO"
+frequency = "monthly"
+transformation = "percent_change"
+aggregation = "latest"
+
+[[targets.features]]
+name = "retail_sales_for_gdp"
+series_id = "RSAFS"
+frequency = "monthly"
+transformation = "percent_change"
+aggregation = "latest"
+
+[[targets.features]]
+name = "housing_for_gdp"
+series_id = "HOUST"
+frequency = "monthly"
+transformation = "log_change"
+aggregation = "latest"
+
+[[targets.features]]
+name = "initial_claims_for_gdp"
+series_id = "ICSA"
+frequency = "weekly"
+transformation = "level"
+aggregation = "trailing_mean"
+window = 4
+
+[[targets.features]]
+name = "dgs10_20d_for_gdp"
+series_id = "DGS10"
+frequency = "daily"
+transformation = "level"
+aggregation = "trailing_mean"
+window = 20

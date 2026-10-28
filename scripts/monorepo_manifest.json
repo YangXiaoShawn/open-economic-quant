@@ -1,0 +1,294 @@
+{
+  "algorithm": "sha256",
+  "regenerate": "make update-manifest",
+  "projects": {
+    "CasualLab": {
+      "project": "casuallab",
+      "file_count": 6,
+      "files": [
+        {
+          "path": "AGENTS.md",
+          "size_bytes": 1619,
+          "sha256": "06dc5e0987c89566d853b39dc96f575f1f6c41533c6a5541daf5991cd0529b05"
+        },
+        {
+          "path": "Makefile",
+          "size_bytes": 2146,
+          "sha256": "284fefb414849d6fd54a8ce84ecca416c4b7f8c5036f5cbd7154175a5c804043"
+        },
+        {
+          "path": "README.md",
+          "size_bytes": 13745,
+          "sha256": "45735c0faf1f7e932c2d4e40a90d6ef5f2b1e580f02c55ae590d94656c7aeeaf"
+        },
+        {
+          "path": "STATUS.md",
+          "size_bytes": 18185,
+          "sha256": "9f820ee87563a16363d61d0e2176c8cfaa750872ec1c28cf3f7f49250ba8e5cb"
+        },
+        {
+          "path": "project.yaml",
+          "size_bytes": 1995,
+          "sha256": "b234aa8bd4e1a223e2ccaa1b8655bcc4bb8f1790f0787d02d47ac3496b115368"
+        },
+        {
+          "path": "pyproject.toml",
+          "size_bytes": 1416,
+          "sha256": "92aaf6551d3a913f98ab795ad304fbb8ccf6b0d034f064ecfdf1a768a48d2963"
+        }
+      ]
+    },
+    "Macroeconomics": {
+      "project": "macroeconomics",
+      "file_count": 6,
+      "files": [
+        {
+          "path": "AGENTS.md",
+          "size_bytes": 3435,
+          "sha256": "3fa5430bb3508e66c21b08aba85c5b5502e6791c8e05edac3bc56c9fcd6b39c6"
+        },
+        {
+          "path": "Makefile",
+          "size_bytes": 3191,
+          "sha256": "3cb51c1423f418fc6712361cbd23d0be22398dde15a9939069b1bfbedd9c3882"
+        },
+        {
+          "path": "README.md",
+          "size_bytes": 18186,
+          "sha256": "1c7a71529a906932a57e3d22d850662b35bc78642947eda5dd24c22139830c67"
+        },
+        {
+          "path": "STATUS.md",
+          "size_bytes": 24295,
+          "sha256": "686f746e641ceb8a3c8d18bb22bdd87504107860f3bf83e1ae961de7b0a164c9"
+        },
+        {
+          "path": "project.yaml",
+          "size_bytes": 2082,
+          "sha256": "e847b74a20dc84a0d3b0c34c9cb433ea5c3d5812ac3bca76db7faf4b89007172"
+        },
+        {
+          "path": "pyproject.toml",
+          "size_bytes": 1483,
+          "sha256": "0eaada5b0f844d4930fd941a88175e2bfb81d01a70d341af00b0953bec5960ae"
+        }
+      ]
+    },
+    "RealEstate": {
+      "project": "realestate",
+      "file_count": 6,
+      "files": [
+        {
+          "path": "AGENTS.md",
+          "size_bytes": 6389,
+          "sha256": "e812a8f774faf9896ec67435606c5b5dfc6903bf9c004e276a557af2ca58e723"
+        },
+        {
+          "path": "Makefile",
+          "size_bytes": 3961,
+          "sha256": "6e775c606d105b921105c2f62316d87f0a0208ca0111165b99497a763639ee51"
+        },
+        {
+          "path": "README.md",
+          "size_bytes": 7683,
+          "sha256": "344c6d3c93dbf24cb064dcb270bfd43d304b49c7eefc5bd52e231c5a6697c25c"
+        },
+        {
+          "path": "STATUS.md",
+          "size_bytes": 16430,
+          "sha256": "45edfa07a1b6e1c90048fcc63bfb05a69fb7e9e0f18826cbcce93754a0aa5a6f"
+        },
+        {
+          "path": "project.yaml",
+          "size_bytes": 2941,
+          "sha256": "c48095ac9d6b450a5c9c39aee0dda90d315c06b31c555bb676c447e68da6ddfe"
+        },
+        {
+          "path": "pyproject.toml",
+          "size_bytes": 3843,
+          "sha256": "834d8dd2b6b76fae7a00274e9fd35a8fb8883558b0f709425cb82269e7ca9529"
+        }
+      ]
+    },
+    "TariffIncidence": {
+      "project": "tariff-incidence",
+      "file_count": 6,
+      "files": [
+        {
+          "path": "AGENTS.md",
+          "size_bytes": 4737,
+          "sha256": "2be8e0d62030e2ed6532d2e2560121b78f2a8c977167161d5a689ac54dee9e76"
+        },
+        {
+          "path": "Makefile",
+          "size_bytes": 3514,
+          "sha256": "fd31162850eaaa6e43b6269ab9b8e732ca6fdd8f12c4665fcc6e716340182715"
+        },
+        {
+          "path": "README.md",
+          "size_bytes": 14205,
+          "sha256": "b845fd9dd30d3478adcc8343a2e6fdcf86585e9e77f6d259b38f972c34f5c4f0"
+        },
+        {
+          "path": "STATUS.md",
+          "size_bytes": 35260,
+          "sha256": "6d750fafd57758f7ec3f389d9d76dcef7d2f8c4fef9eea4ff660a502599b36cf"
+        },
+        {
+          "path": "project.yaml",
+          "size_bytes": 2818,
+          "sha256": "b76aa1da794e9fef138461e5e38357cd60abe2b93b078a1939826a41ce619354"
+        },
+        {
+          "path": "pyproject.toml",
+          "size_bytes": 2473,
+          "sha256": "fbac50a01cb7e1a8a235dab2de44fcb6f3045e1be2cc83ad29d73addad3e66e4"
+        }
+      ]
+    },
+    "Microstructure": {
+      "project": "microstructure",
+      "file_count": 6,
+      "files": [
+        {
+          "path": "AGENTS.md",
+          "size_bytes": 2834,
+          "sha256": "b8f58f4338bd5ee3d5b0bf64a36cef31aa9f51cdd2c01683fc11bf546f42a360"
+        },
+        {
+          "path": "Makefile",
+          "size_bytes": 16917,
+          "sha256": "04b8ae841897291ff690d344abb6e1c0e967b298629f26212f16dd8378437caf"
+        },
+        {
+          "path": "README.md",
+          "size_bytes": 29281,
+          "sha256": "ed1e77bf0ea2031c7ca894acaa0e20d0943fc984e3a10c4a345eb0d6aeea985a"
+        },
+        {
+          "path": "STATUS.md",
+          "size_bytes": 10873,
+          "sha256": "6bc7585acf32351f50f88378e55fcf695dd3fb417e41706aec8290dbe61c93f0"
+        },
+        {
+          "path": "project.yaml",
+          "size_bytes": 3593,
+          "sha256": "60f8ace546ad876aa28184fc9842051c807bce753fbbd9db2bd1379b158f0f08"
+        },
+        {
+          "path": "pyproject.toml",
+          "size_bytes": 1709,
+          "sha256": "6dd801d3f2f02be862d5cf2697541109419ca3bf9219a9781edc364e6b39994a"
+        }
+      ]
+    },
+    "EMFactorTiming": {
+      "project": "em-factor-timing",
+      "file_count": 6,
+      "files": [
+        {
+          "path": "AGENTS.md",
+          "size_bytes": 2257,
+          "sha256": "afd19929ddef058ad263de43d4c54ae77d790b22796a385763023b94f435481d"
+        },
+        {
+          "path": "Makefile",
+          "size_bytes": 2293,
+          "sha256": "556f37ae76f8a87ba1e57b327ec32e80cd7ada37fbadfcf13cb370fe2be76d1c"
+        },
+        {
+          "path": "README.md",
+          "size_bytes": 12756,
+          "sha256": "7bfefe231766e8154a6eedc8bead800193ab59a4c8a77d10eeff1f4f01154d06"
+        },
+        {
+          "path": "STATUS.md",
+          "size_bytes": 2486,
+          "sha256": "6c5b874db76fb73324dfb1abd72f6a3b238327707123b51098abd670667b2035"
+        },
+        {
+          "path": "project.yaml",
+          "size_bytes": 3186,
+          "sha256": "398a71c0d25ec2af601592988bc3d96b65f08038829cbf9bdea81422a37868e3"
+        },
+        {
+          "path": "pyproject.toml",
+          "size_bytes": 1073,
+          "sha256": "89d89665cc4e8ddf9c62ac85d7be71952d9b31c4f20156ca92e0e21f29ccaaeb"
+        }
+      ]
+    },
+    "PolymarketFactors": {
+      "project": "polymarket-factors",
+      "file_count": 6,
+      "files": [
+        {
+          "path": "AGENTS.md",
+          "size_bytes": 516,
+          "sha256": "6bbc9915464993d6409b1313e6ffa3008b291d2223b27390945abbb6ed290089"
+        },
+        {
+          "path": "Makefile",
+          "size_bytes": 423,
+          "sha256": "b7a4c337636cbe0d72c3548fcb61429d483ab1d5f92f9675d4212a46da378603"
+        },
+        {
+          "path": "README.md",
+          "size_bytes": 8935,
+          "sha256": "f6f295e7b0b002d066140ac77dc4c7bf53ef0ce56e67698bda5fe71453375068"
+        },
+        {
+          "path": "STATUS.md",
+          "size_bytes": 1029,
+          "sha256": "723d16bf6e934a6bb6261731cec438a4d658798c0c3377391e669ed7cb3ece5f"
+        },
+        {
+          "path": "project.yaml",
+          "size_bytes": 2777,
+          "sha256": "988742e0eb01e1faeb558da264559158acd4838556899a9b28f5381c24844241"
+        },
+        {
+          "path": "pyproject.toml",
+          "size_bytes": 1292,
+          "sha256": "e5da3034a680f2f0010e6a28d88786e9c4e5b616250089ae04d337b392ecdbfd"
+        }
+      ]
+    },
+    "CryptoFactors": {
+      "project": "crypto-factors",
+      "file_count": 6,
+      "files": [
+        {
+          "path": "AGENTS.md",
+          "size_bytes": 308,
+          "sha256": "35877900783ded1e4ce3667d111e3a132b24bcd18b44e46ebfa664321e781a11"
+        },
+        {
+          "path": "Makefile",
+          "size_bytes": 446,
+          "sha256": "594b4bb69105f6c93d978e0e8177213fcc576b98c1016163096a025febb6ae5d"
+        },
+        {
+          "path": "README.md",
+          "size_bytes": 13994,
+          "sha256": "bedf12b46fab6cd7bdd6f974ce76a235d3c2da6131dde85fb5ac7693e4902fa7"
+        },
+        {
+          "path": "STATUS.md",
+          "size_bytes": 1547,
+          "sha256": "2d9afa448af46fb138e72f8407e044ec75bf38e45c89d567e33c82434fd84436"
+        },
+        {
+          "path": "project.yaml",
+          "size_bytes": 3213,
+          "sha256": "0da2920b343d120eccb8e2b66e56dc0056ea6719b87c9b55ca49afa8b98f23d1"
+        },
+        {
+          "path": "pyproject.toml",
+          "size_bytes": 1146,
+          "sha256": "dc3aeaa74045907da49f84cabc430553921c04c2de467c2864afba504f00abca"
+        }
+      ]
+    }
+  }
+}

@@ -251,7 +251,8 @@ empirical finding about real forecast accuracy, the U.S. economy, or policy.
   pre-release forecast origins, 5,766 feature cells, 450 target rows, 1,980 forecasts,
   54 metric rows, 893 intentionally leaked naive cells, three news updates, three briefs,
   and zero strict-mode timing violations.
-- `.venv/bin/pytest -q` — **215 passed**, with one non-failing joblib
+- `.venv/bin/pytest -q` — **215 passed** when this record was made (the suite now collects 216
+  tests, `pytest --collect-only`, 2026-10-26), with one non-failing joblib
   physical-core detection warning.
 - `.venv/bin/ruff check .` — passed.
 - Independent DuckDB artifact/count/timing audit — passed.

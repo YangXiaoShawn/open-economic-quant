@@ -245,6 +245,7 @@ def test_a_line_with_no_successor_is_left_alone_rather_than_guessed():
     assert repairs == []
 
 
+@pytest.mark.skipif(not XLS.exists(), reason="vintages not cached")
 def test_repairs_never_move_an_industry_across_a_three_digit_group():
     """Summary-level results aggregate at three digits and must not move.
 

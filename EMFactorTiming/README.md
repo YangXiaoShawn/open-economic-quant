@@ -99,7 +99,18 @@ Evaluated directly on the 312 monthly out-of-sample portfolio return series acro
 | `shrink_mean:rule` ($\kappa = 240$) | +1.3564 | 2.1325 | 2.0522 | 0.0558 | -3.60 | 9.15 |
 | `eb_shrink_mean:rule` (36m adaptive $\kappa_t$) | +1.2116 | 2.0113 | 1.9186 | 0.0605 | -3.43 | 8.81 |
 | `gbrt_rs:own` (forecast-shrunk GBRT) | +1.1835 | 2.0937 | 1.7050 | 0.2436 | -3.80 | 7.63 |
-| **`turnover_damped_blend` (75% $\kappa=240$ + 25% `gbrt_rs`)** | **+1.3131** | **2.1719** | **2.0122** | **0.1028** | **-3.64** | **8.95** |
+| `turnover_damped_blend` (75% $\kappa=240$ + 25% `gbrt_rs`) | +1.3131 | 2.1719 | 2.0122 | 0.1028 | -3.64 | 8.95 |
+
+Three caveats. The turnover-damped blend has the highest gross Sharpe but not the highest
+net Sharpe: at 20 bp it reaches 2.0122, below $\kappa = 240$ alone (2.0522), because it
+turns over 0.1028 a month against 0.0558. The blend's $\kappa = 240$ and its 75/25 weight
+were chosen after seeing these same 312 out-of-sample months, so differences between rows
+are in-sample model selection, not an out-of-sample test. And no committed script writes
+`reports/jkp_em/eb_and_long_only_summary.csv`, or the `reports/post_2025_oos_2026_10/` and
+`reports/live_readiness_2026_10/` tables used below and in the 2026-10 audit: the blend is
+not implemented in `src/`, and the committed `eb_shrink_mean` rule sets $\kappa_t$ from an
+expanding within/between-variance ratio clipped to [12, 600] (`src/emft/features.py`), not
+the "36m rolling inverse-vol adaptive kappa in {60,120,240}" described in that CSV.
 
 ### Post-2025 Out-of-Sample Extension Through Latest Trading Day (`2026-01` to `2026-10-21`, 10 Months / 202 Trading Days)
 
@@ -122,7 +133,7 @@ Extended from the JKP `2025-12` cutoff through `2026-10-21` using 49 daily MSCI 
 
 | Layer | State |
 |---|---|
-| Pipeline, tests, synthetic validation | complete — 15 tests pass; size/power in `reports/validation/` |
+| Pipeline, tests, synthetic validation | complete — 19 tests pass (2026-10-26); size/power in `reports/validation/` |
 | Real-data run on JKP factors | complete — `reports/jkp_em/` (OLS, elastic net, trees, neural net) |
 | Robustness | complete for κ, OOS start, factor weighting, time-varying classification, costs, break-even costs; size-dependent costs pending |
 | Extensions | real-time forecast shrinkage and U.S. state variables (exploratory) |
@@ -132,7 +143,7 @@ Extended from the JKP `2025-12` cutoff through `2026-10-21` using 49 daily MSCI 
 
 ```bash
 pip install -e ".[dev]"          # or: pip install numpy pandas scikit-learn scipy matplotlib pyyaml pyarrow pytest
-make test                         # 15 tests: loader, macro, leakage, market history, recovery, null, transfer, real-time shrinkage
+make test                         # 19 tests: loader, macro, leakage, market history, recovery, null, transfer, real-time shrinkage, published-table checks
 make validate                     # size/power simulation (~3 min)
 make demo                         # full pipeline on synthetic data (~8 min)
 make run                          # main real-data run incl. neural net (~17 min); files in data/raw/

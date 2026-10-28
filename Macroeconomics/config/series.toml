@@ -1,0 +1,93 @@
+[fred]
+# Live downloads remain disabled until the caller explicitly authorizes access.
+terms_authorized = false
+api_key_env = "FRED_API_KEY"
+min_interval_seconds = 0.5
+max_attempts = 3
+initial_backoff_seconds = 0.5
+backoff_multiplier = 2.0
+
+[storage]
+parquet_dir = "data/generated/parquet"
+duckdb_path = "data/generated/macro_nowcast.duckdb"
+
+[[series]]
+series_id = "PAYEMS"
+title = "All Employees, Total Nonfarm"
+role = "target"
+units = "thousands_of_persons"
+frequency = "monthly"
+seasonal_adjustment = "seasonally_adjusted"
+transformation = "level"
+
+[[series]]
+series_id = "ICSA"
+title = "Initial Claims"
+units = "number"
+frequency = "weekly"
+seasonal_adjustment = "seasonally_adjusted"
+transformation = "level"
+
+[[series]]
+series_id = "CCSA"
+title = "Continued Claims"
+units = "number"
+frequency = "weekly"
+seasonal_adjustment = "seasonally_adjusted"
+transformation = "level"
+
+[[series]]
+series_id = "UNRATE"
+title = "Unemployment Rate"
+units = "percent"
+frequency = "monthly"
+seasonal_adjustment = "seasonally_adjusted"
+transformation = "level"
+
+[[series]]
+series_id = "AWHMAN"
+title = "Average Weekly Hours of Production and Nonsupervisory Employees, Manufacturing"
+units = "hours"
+frequency = "monthly"
+seasonal_adjustment = "seasonally_adjusted"
+transformation = "level"
+
+[[series]]
+series_id = "INDPRO"
+title = "Industrial Production: Total Index"
+units = "index"
+frequency = "monthly"
+seasonal_adjustment = "seasonally_adjusted"
+transformation = "level"
+
+[[series]]
+series_id = "RSAFS"
+title = "Advance Retail Sales: Retail Trade"
+units = "millions_of_dollars"
+frequency = "monthly"
+seasonal_adjustment = "seasonally_adjusted"
+transformation = "level"
+
+[[series]]
+series_id = "HOUST"
+title = "New Privately-Owned Housing Units Started"
+units = "thousands_of_units_saar"
+frequency = "monthly"
+seasonal_adjustment = "seasonally_adjusted"
+transformation = "level"
+
+[[series]]
+series_id = "UMCSENT"
+title = "University of Michigan: Consumer Sentiment"
+units = "index"
+frequency = "monthly"
+seasonal_adjustment = "not_seasonally_adjusted"
+transformation = "level"
+
+[[series]]
+series_id = "DGS10"
+title = "Market Yield on U.S. Treasury Securities at 10-Year Constant Maturity"
+units = "percent"
+frequency = "daily"
+seasonal_adjustment = "not_seasonally_adjusted"
+transformation = "level"

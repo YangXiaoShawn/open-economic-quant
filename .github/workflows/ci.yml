@@ -6,38 +6,90 @@ on:
   pull_request:
     branches: ["main"]
 
+permissions:
+  contents: read
+
 jobs:
-  verify-monorepo:
+  project-tests:
+    name: ${{ matrix.project }} tests
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     strategy:
+      fail-fast: false
       matrix:
-        python-version: ["3.10", "3.12"]
+        include:
+          # CasualLab's chart and Streamlit tests need its dashboard extra.
+          - project: CasualLab
+            extras: dev,dashboard
+          - project: Macroeconomics
+            extras: dev
+          - project: RealEstate
+            extras: dev
+          - project: TariffIncidence
+            extras: dev
+          - project: Microstructure
+            extras: dev
+          - project: EMFactorTiming
+            extras: dev
+          - project: PolymarketFactors
+            extras: dev
+          - project: CryptoFactors
+            extras: dev
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          python-version: ${{ matrix.python-version }}
+          persist-credentials: false
 
-      - name: Install oeq-core
-        run: python -m pip install -e packages/oeq-core
+      - name: Set up Python 3.12
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: |
+            packages/oeq-core/pyproject.toml
+            ${{ matrix.project }}/pyproject.toml
 
-      - name: Run oeq-core unit tests
-        run: python packages/oeq-core/tests/test_oeq_core.py
-
-      - name: Run 8-project contract and AST import hygiene suite
-        run: python tests/test_monorepo_contracts.py
-
-      - name: Run factor & post-publication verification suites
+      - name: Install ${{ matrix.project }} and the workspace oeq-core
         run: |
-          python Microstructure/tests/test_maker_fee_sensitivity.py
-          python EMFactorTiming/tests/test_published_jkp_results.py
-          python PolymarketFactors/tests/test_published_artifacts.py
-          python CryptoFactors/tests/test_published_results.py
-          python CryptoFactors/tests/test_factor_fixtures.py
-          python CryptoFactors/tests/test_postpub_windows.py
+          python -m pip install --upgrade pip
+          python -m pip install -e "${{ matrix.project }}[${{ matrix.extras }}]"
+          # Projects pin oeq-core to a published commit for standalone installs;
+          # test against this checkout's copy instead.
+          python -m pip install --no-deps -e packages/oeq-core
+
+      - name: Run ${{ matrix.project }} pytest suite
+        working-directory: ${{ matrix.project }}
+        run: python -m pytest
+
+  monorepo-checks:
+    name: oeq-core, contracts and sample reproduction
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: |
+            packages/oeq-core/pyproject.toml
+            PolymarketFactors/pyproject.toml
+            CryptoFactors/pyproject.toml
+
+      - name: Install oeq-core and the sample-pipeline projects
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pytest -e PolymarketFactors -e CryptoFactors
+          python -m pip install --no-deps -e packages/oeq-core
+
+      - name: Run oeq-core and monorepo script tests
+        run: python -m pytest packages/oeq-core/tests tests
 
       - name: Execute full monorepo verification
-        run: make verify-all
+        run: make verify-all PY=python

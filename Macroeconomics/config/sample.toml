@@ -1,0 +1,100 @@
+[project]
+name = "synthetic-payroll-vertical-slice"
+fixture_label = "synthetic_fixture"
+random_seed = 20260807
+timezone = "America/New_York"
+date_only_available_time = "23:59:59"
+fixture_start = "2017-01-01"
+fixture_end = "2025-03-01"
+generated_dir = "data/generated"
+report_dir = "reports/generated"
+
+[target]
+series_id = "PAYEMS"
+name = "payems_change_mom_thousands"
+frequency = "monthly"
+transformation = "difference"
+horizon = 0
+forecast_day = 25
+
+[backtest]
+minimum_train_periods = 36
+interval_alpha = 0.20
+interval_min_residuals = 12
+evaluation_start = "2021-02-01"
+evaluation_end = "2024-12-01"
+latest_evaluation_date = "2025-03-31"
+
+[[features]]
+name = "payems_change_lag1"
+series_id = "PAYEMS"
+frequency = "monthly"
+transformation = "difference"
+aggregation = "latest"
+lag_periods = 1
+
+[[features]]
+name = "icsa_4w_mean"
+series_id = "ICSA"
+frequency = "weekly"
+transformation = "level"
+aggregation = "trailing_mean"
+window = 4
+
+[[features]]
+name = "ccsa_4w_mean"
+series_id = "CCSA"
+frequency = "weekly"
+transformation = "level"
+aggregation = "trailing_mean"
+window = 4
+
+[[features]]
+name = "unrate_level"
+series_id = "UNRATE"
+frequency = "monthly"
+transformation = "level"
+aggregation = "latest"
+
+[[features]]
+name = "awhman_change"
+series_id = "AWHMAN"
+frequency = "monthly"
+transformation = "difference"
+aggregation = "latest"
+
+[[features]]
+name = "indpro_pct_change"
+series_id = "INDPRO"
+frequency = "monthly"
+transformation = "percent_change"
+aggregation = "latest"
+
+[[features]]
+name = "rsafs_pct_change"
+series_id = "RSAFS"
+frequency = "monthly"
+transformation = "percent_change"
+aggregation = "latest"
+
+[[features]]
+name = "houst_log_change"
+series_id = "HOUST"
+frequency = "monthly"
+transformation = "log_change"
+aggregation = "latest"
+
+[[features]]
+name = "umcsent_change"
+series_id = "UMCSENT"
+frequency = "monthly"
+transformation = "difference"
+aggregation = "latest"
+
+[[features]]
+name = "dgs10_20d_mean"
+series_id = "DGS10"
+frequency = "daily"
+transformation = "level"
+aggregation = "trailing_mean"
+window = 20

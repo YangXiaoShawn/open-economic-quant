@@ -23,6 +23,10 @@ REAL_BUNDLE = (
     / "nyc_full"
     / "calibration_network"
 )
+requires_real_bundle = pytest.mark.skipif(
+    not REAL_BUNDLE.is_dir(),
+    reason="artifacts/nyc_full/calibration_network is gitignored; `make validate-nyc-full` builds it",
+)
 
 
 def _source_attestation() -> dict[str, object]:
@@ -137,6 +141,7 @@ def _synthetic_bundle(tmp_path: Path, n_zones: int = 12) -> Path:
     return bundle
 
 
+@requires_real_bundle
 def test_real_and_synthetic_calibration_bundles_validate_and_run(
     tmp_path: Path,
 ) -> None:
@@ -166,6 +171,7 @@ def test_real_and_synthetic_calibration_bundles_validate_and_run(
     assert synthetic_result.fit_ledger["fit_complete"].all()
 
 
+@requires_real_bundle
 def test_real_nyc_graph_benchmark_is_deterministic_and_records_selection() -> None:
     config = NYCGraphBenchmarkConfig(
         replications=3,
@@ -218,6 +224,7 @@ def test_bundle_validation_rejects_non_descriptive_evidence(tmp_path: Path) -> N
         validate_nyc_graph_bundle(bundle)
 
 
+@requires_real_bundle
 def test_real_nyc_geometry_recovers_controlled_targets_and_withholds_naive_total() -> None:
     config = NYCGraphBenchmarkConfig(
         replications=8,
