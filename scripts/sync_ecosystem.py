@@ -128,7 +128,9 @@ def sync_local_files(projects: list[str]) -> dict[str, int]:
     evidence_path.write_text(json.dumps(evidence, indent=2) + "\n", encoding="utf-8")
 
     subprocess.run([sys.executable, str(PORTAL / "scripts" / "build_space_catalog.py")], check=True)
+    subprocess.run([sys.executable, str(PORTAL / "scripts" / "build_site_data.py")], check=True)
     subprocess.run([sys.executable, str(PORTAL / "scripts" / "build_research_portfolio.py")], check=True)
+    subprocess.run([sys.executable, str(PORTAL / "scripts" / "build_site_data.py"), "--check"], check=True)
     subprocess.run([sys.executable, str(PORTAL / "scripts" / "validate_projects.py")], check=True)
     subprocess.run([sys.executable, str(PORTAL / "scripts" / "verify_deployment.py")], check=True)
 
@@ -199,7 +201,9 @@ def push_all(projects: list[str], message: str) -> dict[str, str]:
     ev_path.write_text(json.dumps(ev, indent=2) + "\n", encoding="utf-8")
 
     subprocess.run([sys.executable, str(PORTAL / "scripts" / "build_space_catalog.py")], check=True)
+    subprocess.run([sys.executable, str(PORTAL / "scripts" / "build_site_data.py")], check=True)
     subprocess.run([sys.executable, str(PORTAL / "scripts" / "build_research_portfolio.py")], check=True)
+    subprocess.run([sys.executable, str(PORTAL / "scripts" / "build_site_data.py"), "--check"], check=True)
     subprocess.run([sys.executable, str(PORTAL / "scripts" / "verify_deployment.py")], check=True)
 
     sp_info = api.upload_folder(
