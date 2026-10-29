@@ -205,6 +205,8 @@ def run_crypto_day_by_day_comparison() -> dict:
     fd["FUND_f"] = fd.groupby("sym")["FUND_sum"].transform(lambda x: x.rolling(5, min_periods=2).mean())
     fd["fwd_fund"] = fd.groupby("sym")["FUND_sum"].shift(-1)
 
+    now_utc_ts = pd.Timestamp.now(tz="UTC")
+    okx_c = okx_c[~((okx_c["confirm"] == 0) & ((now_utc_ts - okx_c["day"]) < pd.Timedelta(hours=2)))].copy()
     okx_piv = okx_c.pivot_table(index="day", columns="sym", values="close_okx").sort_index()
     okx_confirm = okx_c.groupby("day")["confirm"].median().to_dict()
     okx_ret = okx_piv.pct_change()
