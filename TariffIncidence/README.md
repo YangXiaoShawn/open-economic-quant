@@ -9,7 +9,7 @@ episodes are added through configuration, not code.
 
 ## Public release
 
-- [Source repository](https://github.com/YangXiaoShawn/open-economic-quant-tariff-incidence)
+- [Source repository](https://github.com/YangXiaoShawn/open-economic-quant/tree/main/TariffIncidence)
 - [Permanent project page](https://yangxiaoshawn.github.io/projects/tariff-incidence/)
 - [Versioned research package](https://huggingface.co/datasets/ShawnChamberlain/open-economic-quant-research-data/tree/main/TariffIncidence)
 - [Interactive research explorer](https://huggingface.co/spaces/ShawnChamberlain/open-economic-quant-research-observatory)

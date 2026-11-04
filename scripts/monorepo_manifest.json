@@ -28,8 +28,8 @@
         },
         {
           "path": "project.yaml",
-          "size_bytes": 1995,
-          "sha256": "b234aa8bd4e1a223e2ccaa1b8655bcc4bb8f1790f0787d02d47ac3496b115368"
+          "size_bytes": 2005,
+          "sha256": "1e7b64bf471d54c08bcbbdd2fcc127b593c97e1f8a231badb8a936c5ac8fd55f"
         },
         {
           "path": "pyproject.toml",
@@ -64,8 +64,8 @@
         },
         {
           "path": "project.yaml",
-          "size_bytes": 2082,
-          "sha256": "e847b74a20dc84a0d3b0c34c9cb433ea5c3d5812ac3bca76db7faf4b89007172"
+          "size_bytes": 2092,
+          "sha256": "35955763e50837fff75aafc4ddd45a4d96479a6c6cbbe8e5af6911e01176c503"
         },
         {
           "path": "pyproject.toml",
@@ -90,8 +90,8 @@
         },
         {
           "path": "README.md",
-          "size_bytes": 7683,
-          "sha256": "344c6d3c93dbf24cb064dcb270bfd43d304b49c7eefc5bd52e231c5a6697c25c"
+          "size_bytes": 7693,
+          "sha256": "ed40044b8cf93772d11887a3741402187ab9db40f1be134526fafc179ab4e3a0"
         },
         {
           "path": "STATUS.md",
@@ -100,8 +100,8 @@
         },
         {
           "path": "project.yaml",
-          "size_bytes": 2941,
-          "sha256": "c48095ac9d6b450a5c9c39aee0dda90d315c06b31c555bb676c447e68da6ddfe"
+          "size_bytes": 2951,
+          "sha256": "d472a4ba8e8a2a140f58f041ab1a27818adc6a3155839e8c81fbc07f263aaeb3"
         },
         {
           "path": "pyproject.toml",
@@ -126,8 +126,8 @@
         },
         {
           "path": "README.md",
-          "size_bytes": 14205,
-          "sha256": "b845fd9dd30d3478adcc8343a2e6fdcf86585e9e77f6d259b38f972c34f5c4f0"
+          "size_bytes": 14214,
+          "sha256": "9178dd50a57ef85e319c7b60cf553f49d426d5b1991c8a60b410f589ff76afb4"
         },
         {
           "path": "STATUS.md",
@@ -136,8 +136,8 @@
         },
         {
           "path": "project.yaml",
-          "size_bytes": 2818,
-          "sha256": "b76aa1da794e9fef138461e5e38357cd60abe2b93b078a1939826a41ce619354"
+          "size_bytes": 2827,
+          "sha256": "f80a32c808eab2fe2e553e1e73597c6597e6c5d15f1c5789ada1706d67fe9ff3"
         },
         {
           "path": "pyproject.toml",
@@ -162,8 +162,8 @@
         },
         {
           "path": "README.md",
-          "size_bytes": 29281,
-          "sha256": "ed1e77bf0ea2031c7ca894acaa0e20d0943fc984e3a10c4a345eb0d6aeea985a"
+          "size_bytes": 29291,
+          "sha256": "9035cc45597c5f587c60761242fab6ce25fbe41702e305d6b895484cdb8b32aa"
         },
         {
           "path": "STATUS.md",
@@ -172,8 +172,8 @@
         },
         {
           "path": "project.yaml",
-          "size_bytes": 3593,
-          "sha256": "60f8ace546ad876aa28184fc9842051c807bce753fbbd9db2bd1379b158f0f08"
+          "size_bytes": 3603,
+          "sha256": "2744c6045c8868817bfa9d6b9b3cfa449a5613c10f2a9dfddec896faafd41a42"
         },
         {
           "path": "pyproject.toml",
@@ -208,8 +208,8 @@
         },
         {
           "path": "project.yaml",
-          "size_bytes": 3186,
-          "sha256": "398a71c0d25ec2af601592988bc3d96b65f08038829cbf9bdea81422a37868e3"
+          "size_bytes": 3194,
+          "sha256": "4c963fec13a8334396926257fb404ee4273d95448b6a0cbc9eda7c7c79aaa4cb"
         },
         {
           "path": "pyproject.toml",
@@ -244,8 +244,8 @@
         },
         {
           "path": "project.yaml",
-          "size_bytes": 2777,
-          "sha256": "988742e0eb01e1faeb558da264559158acd4838556899a9b28f5381c24844241"
+          "size_bytes": 2786,
+          "sha256": "12f098dc90d3d9ac6b198d57ab6f4ae3c6e56bfc3b907c1af74551387d5461b6"
         },
         {
           "path": "pyproject.toml",
@@ -280,8 +280,8 @@
         },
         {
           "path": "project.yaml",
-          "size_bytes": 3213,
-          "sha256": "0da2920b343d120eccb8e2b66e56dc0056ea6719b87c9b55ca49afa8b98f23d1"
+          "size_bytes": 3222,
+          "sha256": "a875603a5cfbe7a0f5e5a73f365d0aeb57138ae8a833128f8fed4e71ebd2adb9"
         },
         {
           "path": "pyproject.toml",

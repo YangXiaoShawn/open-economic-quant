@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """Ecosystem synchronization tool for Open Economic & Quant Research.
 
-Synchronizes subprojects from the unified `open-economic-quant` monorepo to:
-1. Standalone project checkouts (`EMFactorTiming`, `PolymarketFactors`, `CryptoFactors`, etc.)
-2. `YangXiaoShawn.github.io` (`build/hf-dataset/dataset_manifest.json`, `assets/data/evidence.json`,
+The monorepo is the only GitHub home of the eight projects; the former standalone
+`open-economic-quant-<project>` repositories are archived and no longer receive commits.
+This tool synchronizes subprojects from the monorepo to:
+1. `YangXiaoShawn.github.io` (`build/hf-dataset/dataset_manifest.json`, `assets/data/evidence.json`,
    `apps/space/catalog/*.json`, and `index.html`)
-3. Optionally pushes commits to GitHub and uploads to Hugging Face Dataset & Space (`--push-all`).
+2. Optionally pushes commits to GitHub and uploads to Hugging Face Dataset & Space (`--push-all`).
 """
 from __future__ import annotations
 
@@ -48,16 +49,8 @@ SYNC_PROJECTS = (
     "CryptoFactors",
 )
 
-STANDALONE_REMOTES = {
-    "CasualLab": "git@github.com:YangXiaoShawn/open-economic-quant-casuallab.git",
-    "Macroeconomics": "git@github.com:YangXiaoShawn/open-economic-quant-macroeconomics.git",
-    "RealEstate": "git@github.com:YangXiaoShawn/open-economic-quant-realestate.git",
-    "TariffIncidence": "git@github.com:YangXiaoShawn/open-economic-quant-tariff-incidence.git",
-    "Microstructure": "git@github.com:YangXiaoShawn/open-economic-quant-microstructure.git",
-    "EMFactorTiming": "git@github.com:YangXiaoShawn/open-economic-quant-em-factor-timing.git",
-    "PolymarketFactors": "git@github.com:YangXiaoShawn/open-economic-quant-polymarket-factors.git",
-    "CryptoFactors": "git@github.com:YangXiaoShawn/open-economic-quant-crypto-factors.git",
-}
+# The standalone split repositories (open-economic-quant-<project>) are archived; nothing
+# is mirrored or pushed to them any more.
 
 
 # Never published to the Hugging Face dataset, whatever the project's data license says.
@@ -94,50 +87,6 @@ def git_ls_files(repo: Path, subdir: str | None = None, ignored: bool = False) -
         return set(paths)
     prefix = f"{subdir}/"
     return {p[len(prefix):] for p in paths if p.startswith(prefix)}
-
-
-def _prune_empty_dirs(directory: Path, stop: Path) -> None:
-    while directory != stop and directory.is_dir() and not any(directory.iterdir()):
-        directory.rmdir()
-        directory = directory.parent
-
-
-def mirror_project(src_dir: Path, dst_dir: Path, delete: bool = True) -> list[str]:
-    """Copy ``src_dir`` over ``dst_dir`` and return the stale paths removed from ``dst_dir``.
-
-    With ``delete``, files the destination checkout tracks in git but the source no longer
-    has are removed, so deletions in the monorepo reach the split repository. Only tracked
-    paths inside ``dst_dir`` are candidates: ``.git``, EXCLUDED paths and local untracked or
-    gitignored files (caches, downloaded data) are never touched.
-    """
-    removed: list[str] = []
-    if delete:
-        dst_root = dst_dir.resolve()
-        for rel in sorted(git_ls_files(dst_dir) or ()):
-            parts = rel.split("/")
-            if parts[0] == ".git" or any(part in EXCLUDED for part in parts):
-                continue
-            if (src_dir / rel).is_file():
-                continue
-            target = dst_dir / rel
-            if not target.resolve().is_relative_to(dst_root):
-                continue
-            if target.is_file() or target.is_symlink():
-                target.unlink()
-                removed.append(rel)
-                _prune_empty_dirs(target.parent, dst_dir)
-
-    for p in src_dir.rglob("*"):
-        rel = p.relative_to(src_dir)
-        if any(part in EXCLUDED for part in rel.parts):
-            continue
-        target = dst_dir / rel
-        if p.is_dir():
-            target.mkdir(parents=True, exist_ok=True)
-        else:
-            target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(p, target)
-    return removed
 
 
 def project_data_license(proj_dir: Path) -> str:
@@ -197,24 +146,14 @@ def report_withheld(proj: str, withheld: list[str], root: Path = MONO) -> None:
         print(f"  {proj}/{group}: {count} file(s)")
 
 
-def sync_local_files(projects: list[str], delete: bool = True, allow_unknown_license: bool = False) -> dict[str, int]:
-    """Copy updated project files to standalone checkouts and refresh portal manifest & evidence."""
+def sync_local_files(projects: list[str], allow_unknown_license: bool = False) -> dict[str, int]:
+    """Refresh the portal's HF dataset manifest, evidence and generated site data."""
     if not PORTAL.exists():
         raise FileNotFoundError(f"Portal checkout not found at {PORTAL}")
 
     if str(PORTAL / "scripts") not in sys.path:
         sys.path.insert(0, str(PORTAL / "scripts"))
     from build_space_catalog import SLUGS, file_category  # type: ignore
-
-    for proj in projects:
-        src_dir = MONO / proj
-        dst_dir = SCRATCH / proj
-        dst_dir.mkdir(parents=True, exist_ok=True)
-        if not (dst_dir / ".git").exists():
-            subprocess.run(["git", "-C", str(dst_dir), "init", "-b", "main"], check=True)
-            subprocess.run(["git", "-C", str(dst_dir), "remote", "add", "origin", STANDALONE_REMOTES[proj]], check=True)
-        for rel in mirror_project(src_dir, dst_dir, delete=delete):
-            print(f"sync-delete {proj}/{rel}")
 
     manifest_path = PORTAL / "build" / "hf-dataset" / "dataset_manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
@@ -294,9 +233,6 @@ def push_all(projects: list[str], message: str, allow_unknown_license: bool = Fa
     results: dict[str, str] = {}
     results["monorepo"] = fast_forward_and_push(MONO, message)
 
-    for proj in projects:
-        results[proj] = fast_forward_and_push(SCRATCH / proj, message)
-
     api = HfApi()
     with tempfile.TemporaryDirectory() as tmp:
         stage = Path(tmp)
@@ -358,14 +294,9 @@ def build_parser() -> argparse.ArgumentParser:
         help="Comma-separated list of project directories to sync (default: all eight)",
     )
     ap.add_argument("--verify-only", action="store_true", help="Run monorepo verification only")
-    ap.add_argument("--sync-local", action="store_true", help="Sync local standalone checkouts and portal")
+    ap.add_argument("--sync-local", action="store_true", help="Refresh the local portal checkout from the monorepo")
     ap.add_argument("--push-all", action="store_true", help="Push all changes to GitHub and Hugging Face")
     ap.add_argument("--message", default="Sync Open Economic & Quant ecosystem", help="Commit message for --push-all")
-    ap.add_argument(
-        "--no-delete",
-        action="store_true",
-        help="Do not remove files from standalone checkouts that no longer exist in the monorepo",
-    )
     ap.add_argument(
         "--allow-unknown-license",
         action="store_true",
@@ -386,9 +317,7 @@ def main() -> None:
 
     projects = [p.strip() for p in args.projects.split(",") if p.strip()]
     if args.sync_local or args.push_all:
-        sync_summary = sync_local_files(
-            projects, delete=not args.no_delete, allow_unknown_license=args.allow_unknown_license
-        )
+        sync_summary = sync_local_files(projects, allow_unknown_license=args.allow_unknown_license)
         print("sync-local-ok", json.dumps(sync_summary))
     if args.push_all:
         push_summary = push_all(projects, args.message, allow_unknown_license=args.allow_unknown_license)

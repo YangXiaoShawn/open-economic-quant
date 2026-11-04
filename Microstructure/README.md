@@ -516,7 +516,7 @@ resume-bullet variants, and a ten-minute presentation outline.
 ## Public release
 
 - Project page: <https://yangxiaoshawn.github.io/projects/microstructure/>
-- GitHub source: <https://github.com/YangXiaoShawn/open-economic-quant-microstructure>
+- GitHub source: <https://github.com/YangXiaoShawn/open-economic-quant/tree/main/Microstructure>
 - Versioned code and documentation mirror: <https://huggingface.co/datasets/ShawnChamberlain/open-economic-quant-research-data/tree/main/Microstructure>
 - Interactive evidence explorer: <https://huggingface.co/spaces/ShawnChamberlain/open-economic-quant-research-observatory>
 - Publication and data boundaries: [docs/PUBLICATION.md](docs/PUBLICATION.md) and [docs/DATA_POLICY.md](docs/DATA_POLICY.md)

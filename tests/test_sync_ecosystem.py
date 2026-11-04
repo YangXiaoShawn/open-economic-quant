@@ -1,4 +1,4 @@
-"""Tests for scripts/sync_ecosystem.py: default project set, stale-file deletion, and the HF license guard."""
+"""Tests for scripts/sync_ecosystem.py: default project set, no split-repo mirroring, and the HF license guard."""
 from __future__ import annotations
 
 import subprocess
@@ -15,7 +15,6 @@ from sync_ecosystem import (  # noqa: E402
     SYNC_PROJECTS,
     build_parser,
     hf_upload_plan,
-    mirror_project,
     project_data_license,
 )
 
@@ -41,41 +40,16 @@ class TestSyncEcosystem(unittest.TestCase):
         args = build_parser().parse_args([])
         self.assertEqual(args.projects.split(","), list(SYNC_PROJECTS))
         self.assertEqual(len(SYNC_PROJECTS), 8)
-        self.assertFalse(args.no_delete)
+        self.assertFalse(hasattr(args, "no_delete"))
         self.assertFalse(args.allow_unknown_license)
 
-    def _split_checkout(self) -> tuple[Path, Path]:
-        src = self.tmp / "mono" / "Proj"
-        dst = self.tmp / "Proj"
-        _write(src / ".gitignore", "cache/\n")
-        _write(src / "kept.py", "new\n")
-        _write(src / "pkg" / "added.py")
-        _git(self.tmp, "init", "-q", str(dst))
-        _write(dst / ".gitignore", "cache/\n")
-        _write(dst / "kept.py", "old\n")
-        _write(dst / "stale.py")
-        _write(dst / "old_dir" / "gone.py")
-        _git(dst, "add", ".gitignore", "kept.py", "stale.py", "old_dir/gone.py")
-        _write(dst / "local_notes.txt")  # untracked
-        _write(dst / "cache" / "download.bin")  # gitignored
-        return src, dst
+    def test_no_standalone_split_repos(self) -> None:
+        import sync_ecosystem
 
-    def test_mirror_removes_only_stale_tracked_files(self) -> None:
-        src, dst = self._split_checkout()
-        removed = mirror_project(src, dst)
-        self.assertEqual(sorted(removed), ["old_dir/gone.py", "stale.py"])
-        self.assertEqual((dst / "kept.py").read_text(encoding="utf-8"), "new\n")
-        self.assertTrue((dst / "pkg" / "added.py").is_file())
-        self.assertFalse((dst / "old_dir").exists())
-        self.assertTrue((dst / "local_notes.txt").is_file())
-        self.assertTrue((dst / "cache" / "download.bin").is_file())
-        self.assertTrue((dst / ".git" / "HEAD").is_file())
-
-    def test_mirror_no_delete_keeps_stale_files(self) -> None:
-        src, dst = self._split_checkout()
-        self.assertEqual(mirror_project(src, dst, delete=False), [])
-        self.assertTrue((dst / "stale.py").is_file())
-        self.assertTrue((dst / "pkg" / "added.py").is_file())
+        self.assertFalse(hasattr(sync_ecosystem, "STANDALONE_REMOTES"))
+        self.assertFalse(hasattr(sync_ecosystem, "mirror_project"))
+        source = (ROOT / "scripts" / "sync_ecosystem.py").read_text(encoding="utf-8")
+        self.assertNotIn("git@github.com:YangXiaoShawn/open-economic-quant-", source)
 
     def _workspace(self, data_license: str) -> Path:
         root = self.tmp / "ws"

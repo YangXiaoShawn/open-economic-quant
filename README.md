@@ -40,6 +40,7 @@ The CryptoFactors Sharpe ratios in the Research Portfolio table above (+1.42, +1
 # Run oeq-core tests, 8-project contract & AST import hygiene checks, and sample reproductions
 make verify-all
 
-# Synchronize subprojects to standalone checkouts, YangXiaoShawn.github.io manifest/evidence, and Space catalogs
+# Refresh YangXiaoShawn.github.io manifest/evidence and Space catalogs from the monorepo
+# (the former standalone open-economic-quant-<project> repos are archived)
 make sync-local
 ```
